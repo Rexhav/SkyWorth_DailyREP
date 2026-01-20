@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekly Report | Raghav Sharma</title>
+    <style>
+        /* --- RESET & BASE STYLES --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --bg-dark: #0a0a0a;
+            --text-primary: #ffffff;
+            --text-secondary: #e0e0e0;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --font-main: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            font-family: var(--font-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            padding-bottom: 50px;
+        }
+
+        /* --- COLORFUL AURA BACKGROUND --- */
+        .aura-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(239, 68, 68, 0.15), transparent 40%),  /* Red */
+                radial-gradient(circle at 90% 10%, rgba(59, 130, 246, 0.15), transparent 40%), /* Blue */
+                radial-gradient(circle at 30% 80%, rgba(236, 72, 153, 0.15), transparent 40%), /* Pink */
+                radial-gradient(circle at 70% 90%, rgba(249, 115, 22, 0.15), transparent 40%); /* Orange */
+            animation: shiftColors 15s ease-in-out infinite alternate;
+        }
+
+        @keyframes shiftColors {
+            0% { filter: hue-rotate(0deg); transform: scale(1); }
+            100% { filter: hue-rotate(30deg); transform: scale(1.05); }
+        }
+
+        /* --- CONTAINER --- */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* --- TYPOGRAPHY --- */
+        h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, #fff, #cbd5e1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        h2 { font-size: 1.6rem; margin-bottom: 1rem; color: #fff; display: flex; align-items: center; gap: 10px; }
+        h3 { font-size: 1rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-secondary); margin-bottom: 2rem; opacity: 0.8; }
+        p { margin-bottom: 1rem; color: #d4d4d4; font-size: 1.05rem; }
+        
+        .highlight { color: #60a5fa; font-weight: 600; } 
+        .vocab { font-style: italic; color: #fbbf24; font-weight: 500; }
+
+        /* --- HEADER --- */
+        header { text-align: center; margin-bottom: 5rem; animation: fadeInDown 1s ease-out forwards; }
+        .role-tag {
+            display: inline-block; padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 50px; font-size: 0.9rem;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(5px); margin-top: 1rem;
+        }
+
+        /* --- GLASS CARDS --- */
+        .report-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            opacity: 0; transform: translateY(30px);
+        }
+        .report-card.visible { opacity: 1; transform: translateY(0); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+        .report-card:hover { transform: translateY(-3px); border-color: rgba(255, 255, 255, 0.25); }
+
+        .date-badge { 
+            display: inline-block; font-size: 0.8rem; text-transform: uppercase; 
+            letter-spacing: 0.05em; color: #94a3b8; margin-bottom: 0.5rem; 
+        }
+
+        /* --- MEDIA GRID (UPDATED FOR FULL RATIO) --- */
+        .image-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); 
+            gap: 12px; 
+            margin-top: 1.5rem; 
+        }
+
+        .media-box {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            overflow: hidden;
+            /* REMOVED FIXED ASPECT RATIO so videos can fit better, 
+               or use min-height to ensure uniformity */
+            height: 200px; 
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .media-box:hover {
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: scale(1.02);
+        }
+
+        .media-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Images still fill the box */
+            display: block;
+        }
+
+        .media-box video {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* VIDEO FIX: This ensures the full video shows without cropping */
+            display: block;
+        }
+
+        /* --- GAME SECTION --- */
+        .game-container {
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(145deg, rgba(255,255,255,0.03) 0%, rgba(0,0,0,0.2) 100%);
+            border: 1px solid rgba(251, 191, 36, 0.2);
+            border-radius: 24px;
+            margin-top: 4rem;
+        }
+        .game-title { color: #fbbf24; margin-bottom: 1rem; font-size: 1.4rem; justify-content: center; }
+        .score-board { font-size: 1.2rem; margin-bottom: 1.5rem; color: #d4d4d4; }
+        .question-box { font-size: 1.2rem; margin-bottom: 2rem; min-height: 60px; font-weight: 500; }
+        .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        @media (max-width: 600px) { .options-grid { grid-template-columns: 1fr; } }
+        .option-btn {
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 1rem; color: white; border-radius: 12px; cursor: pointer; transition: all 0.2s; font-size: 0.95rem;
+        }
+        .option-btn:hover { background: rgba(255,255,255,0.15); }
+        .option-btn.correct { background: #10b981 !important; color: white; border-color: #10b981; }
+        .option-btn.wrong { background: #ef4444 !important; animation: shake 0.4s; }
+        .hidden { display: none; }
+        .restart-btn { background: #fbbf24; color: black; border: none; padding: 10px 24px; font-weight: bold; border-radius: 50px; cursor: pointer; margin-top: 1rem; }
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+        .particle { position: absolute; pointer-events: none; animation: pop 1s ease-out forwards; }
+        @keyframes pop { to { transform: translate(var(--x), var(--y)) scale(0); opacity: 0; } }
+        footer { text-align: center; padding: 3rem 0; margin-top: 2rem; border-top: 1px solid rgba(255,255,255,0.05); color: #888; font-size: 0.85rem; }
+
+    </style>
+</head>
+<body>
+
+    <div class="aura-bg"></div>
+
+    <div class="container">
+        
+        <header>
+            <h1>WEEKLY REPORT</h1>
+            <h3>Jan 12 – Jan 19, 2026</h3>
+            <div class="role-tag">Raghav Sharma | Graphic Intern</div>
+        </header>
+
+        <div class="report-card">
+            <h2>Overview</h2>
+            <p>This week was about testing new ideas. We explored how to make our brands stand out using a new <span class="highlight">visual paradigm</span> <span class="vocab">(视觉范式)</span>—moving from standard product shots to more engaging, storytelling visuals.</p>
+        </div>
+
+        <div class="report-card">
+            <span class="date-badge">January 12th</span>
+            <h2>Day 1: Strategy & Research</h2>
+            <p>I started by analyzing the <span class="highlight">competitive landscape</span> <span class="vocab">(竞争格局)</span>. Brands like Metz and Philips are very traditional. We saw a chance for Coocaa to be the <span class="highlight">avant-garde</span> <span class="vocab">(前卫)</span> option.</p>
+            <p>The goal is to use <span class="highlight">evolutionary psychology</span> <span class="vocab">(进化心理学)</span> principles—like using eyes and textures—to grab attention on Amazon.</p>
+            
+            <div class="image-grid">
+                <div class="media-box"><img src="1.png" alt="Strategy 1"></div>
+                <div class="media-box"><img src="2.png" alt="Strategy 2"></div>
+                <div class="media-box"><img src="3.png" alt="Strategy 3"></div>
+            </div>
+        </div>
+
+        <div class="report-card">
+            <span class="date-badge">January 13th</span>
+            <h2>Day 2: Concept & Technical Deep Dive</h2>
+            <p>We conceptualized the "Divine Portal," a <span class="highlight">juxtaposition</span> <span class="vocab">(并列)</span> of traditional culture and modern tech.</p>
+            <p><strong>Meeting with Ms. Wali:</strong> We also had a critical session regarding the core hardware and software architecture. I studied the technical specifications (specs) deeply to ensure our visuals align with the <span class="highlight">intrinsic</span> <span class="vocab">(内在的)</span> capabilities of the TV, specifically the "Halo Control" features.</p>
+            
+            <div class="image-grid">
+                <div class="media-box"><img src="4.png" alt="Concept 1"></div>
+                <div class="media-box"><img src="5.png" alt="Concept 2"></div>
+                <div class="media-box"><video src="6.mp4" controls muted loop playsinline></video></div>
+            </div>
+        </div>
+
+        <div class="report-card">
+            <span class="date-badge">January 14th (Work From Home)</span>
+            <h2>Day 3: Instagram Visuals</h2>
+            <p>For social media, I tried a style focused on <span class="highlight">minimalism</span> <span class="vocab">(极简主义)</span>. The "Never Miss the Detail" concept uses glass reflections to show clarity in an <span class="highlight">implicit</span> <span class="vocab">(含蓄)</span> way.</p>
+            
+            <div class="image-grid">
+                <div class="media-box"><img src="7.png" alt="Insta 1"></div>
+                <div class="media-box"><img src="8.png" alt="Insta 2"></div>
+                <div class="media-box"><video src="9.mp4" controls muted loop playsinline></video></div>
+            </div>
+        </div>
+
+        <div class="report-card">
+            <span class="date-badge">January 15th</span>
+            <h2>Day 4: Festival Content</h2>
+            <p>We created a <span class="highlight">Real-Time Marketing</span> <span class="vocab">(实时营销)</span> post for Makar Sankranti. It was important to create an <span class="highlight">emotional connection</span> <span class="vocab">(情感联系)</span> with the audience.</p>
+            
+            <div class="image-grid">
+                <div class="media-box"><img src="10.png" alt="Festival 1"></div>
+                <div class="media-box"><img src="11.png" alt="Festival 2"></div>
+                <div class="media-box"><video src="12.mp4" controls muted loop playsinline></video></div>
+            </div>
+        </div>
+
+        <div class="report-card" style="border-color: rgba(251, 191, 36, 0.3);">
+            <span class="date-badge" style="color: #fbbf24;">Jan 16th – 18th (WFH - Deep Focus)</span>
+            <h2>Weekend: The Creative Sprint</h2>
+            <p>I find that I am significantly more <span class="highlight">prolific</span> <span class="vocab">(多产)</span> when working from the comfort of my home setup. The relaxed environment allowed me to enter a "flow state" and work extra hours without fatigue.</p>
+            <p>This led to a massive output: I rendered about 50 frames and 8 motion assets to fix the <span class="highlight">monotony</span> <span class="vocab">(单调)</span> of static Amazon listings.</p>
+            
+            <div class="image-grid">
+                <div class="media-box"><img src="13.png" alt="Ad 1"></div>
+                <div class="media-box"><img src="14.png" alt="Ad 2"></div>
+                <div class="media-box"><img src="15.png" alt="Ad 3"></div>
+                <div class="media-box"><video src="16.mp4" controls muted loop playsinline></video></div>
+                
+                <div class="media-box"><img src="17.png" alt="Motion 1"></div>
+                <div class="media-box"><img src="18.png" alt="Motion 2"></div>
+                <div class="media-box"><video src="19.mp4" controls muted loop playsinline></video></div>
+                <div class="media-box"><img src="20.png" alt="Motion 3"></div>
+                <div class="media-box"><video src="21.mp4" controls muted loop playsinline></video></div>
+            </div>
+        </div>
+
+        <div class="report-card">
+            <span class="date-badge">January 19th</span>
+            <h2>Day 7: SKU edit</h2>
+            <p>Used Photoshop, Illustrator and AI Enhancement tool to edit and morph sku packaging images for amazon, pruding an asset of 18-24 images. <span class="highlight">impeccable</span> <span class="vocab">(无懈可击)</span>.</p>
+            
+            <div class="image-grid">
+                <div class="media-box"><img src="22.png" alt="Packaging"></div>
+            </div>
+        </div>
+
+        <div class="game-container report-card visible">
+            <div id="game-active">
+                <h2 class="game-title">✨ MINI VOCAB QUIZ ✨</h2>
+                <p>A quick fun check on the words used in the report!</p>
+                <div class="score-board">Score: <span id="score">0</span> / 50</div>
+                
+                <div class="question-box" id="question-text">Loading...</div>
+                <div class="options-grid" id="options-area"></div>
+            </div>
+
+            <div id="game-result" class="result-screen hidden">
+                <h2 id="final-emoji">🎉</h2>
+                <h3 id="final-title" style="color:white; margin-bottom:0.5rem">DONE!</h3>
+                <p id="final-msg">You scored X points.</p>
+                <button class="restart-btn" onclick="startGame()">Play Again</button>
+            </div>
+        </div>
+
+        <footer>
+            <p>Designed by Raghav Sharma</p>
+        </footer>
+
+    </div>
+
+    <script>
+        // Scroll Animation
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.report-card').forEach(card => observer.observe(card));
+
+        // Quiz Logic
+        const questions = [
+            { word: "Paradigm (范式)", correct: "A typical example or pattern of something.", options: ["A typical example or pattern of something.", "A large television screen.", "To confuse with difficult words.", "A type of marketing strategy."] },
+            { word: "Juxtaposition (并列)", correct: "Placing two things together to show contrast.", options: ["Placing two things together to show contrast.", "Making an image look blurry.", "Rendering a video file quickly.", "Writing a detailed report."] },
+            { word: "Prolific (多产)", correct: "Producing a large amount of work.", options: ["Producing a large amount of work.", "Feeling tired after a week.", "Designing something professional.", "Being specific about details."] },
+            { word: "Avant-garde (前卫)", correct: "New, experimental ideas.", options: ["New, experimental ideas.", "Something old and traditional.", "A safety guard for devices.", "Editing photos with AI."] },
+            { word: "Meticulous (一丝不苟)", correct: "Showing great attention to detail.", options: ["Showing great attention to detail.", "Doing something quickly.", "A metallic texture.", "To be loud and energetic."] },
+            { word: "Intrinsic (内在的)", correct: "Belonging naturally; essential.", options: ["Belonging naturally; essential.", "Something on the outside.", "A type of computer chip.", "Being very creative."] }
+        ];
+
+        let currentQ = 0;
+        let score = 0;
+
+        function startGame() {
+            currentQ = 0; score = 0;
+            document.getElementById('score').innerText = score;
+            document.getElementById('game-active').classList.remove('hidden');
+            document.getElementById('game-result').classList.add('hidden');
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            if (currentQ >= questions.length) { endGame(); return; }
+            const q = questions[currentQ];
+            document.getElementById('question-text').innerHTML = `Definition of <br><span style="color:#fbbf24;">${q.word}</span>?`;
+            const optionsDiv = document.getElementById('options-area');
+            optionsDiv.innerHTML = '';
+            let shuffled = [...q.options].sort(() => Math.random() - 0.5);
+            shuffled.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerText = opt;
+                btn.onclick = () => checkAnswer(btn, opt, q.correct);
+                optionsDiv.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(btn, selected, correct) {
+            const allBtns = document.querySelectorAll('.option-btn');
+            allBtns.forEach(b => b.disabled = true);
+            if (selected === correct) {
+                btn.classList.add('correct');
+                score += 10;
+                document.getElementById('score').innerText = score;
+                createParticles(btn.getBoundingClientRect());
+            } else {
+                btn.classList.add('wrong');
+                allBtns.forEach(b => { if (b.innerText === correct) b.classList.add('correct'); });
+            }
+            setTimeout(() => { currentQ++; loadQuestion(); }, 1200);
+        }
+
+        function endGame() {
+            document.getElementById('game-active').classList.add('hidden');
+            const resScreen = document.getElementById('game-result');
+            resScreen.classList.remove('hidden');
+            document.getElementById('final-msg').innerText = `Score: ${score}/60`;
+            document.getElementById('final-title').innerText = score === 60 ? "VOCAB MASTER!" : "GREAT JOB!";
+            if(score===60) createParticles(resScreen.getBoundingClientRect(), 50);
+        }
+
+        function createParticles(rect, count = 15) {
+            const colors = ['#10b981', '#fbbf24', '#38bdf8', '#ffffff'];
+            for (let i = 0; i < count; i++) {
+                const p = document.createElement('div');
+                p.classList.add('particle');
+                const x = rect.left + rect.width / 2;
+                const y = rect.top + rect.height / 2;
+                p.style.left = x + 'px'; p.style.top = y + 'px';
+                p.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                const size = Math.random() * 8 + 4;
+                p.style.width = size + 'px'; p.style.height = size + 'px';
+                p.style.borderRadius = '50%';
+                const destX = (Math.random() - 0.5) * 200;
+                const destY = (Math.random() - 0.5) * 200;
+                p.style.setProperty('--x', `${destX}px`);
+                p.style.setProperty('--y', `${destY}px`);
+                document.body.appendChild(p);
+                setTimeout(() => p.remove(), 1000);
+            }
+        }
+        startGame();
+    </script>
+</body>
+</html>
