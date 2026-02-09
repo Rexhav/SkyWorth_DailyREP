@@ -3,459 +3,592 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Creative Retrospective | Raghav Sharma</title>
+    <title>Raghav's Creative Log</title>
+    <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        /* --- LIQUID APPLE THEME --- */
         :root {
-            --bg-light: #f5f5f7;
-            --text-primary: #1d1d1f;
-            --text-secondary: #86868b;
-            --glass-bg: rgba(255, 255, 255, 0.65);
-            --glass-border: rgba(255, 255, 255, 0.8);
-            --shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
-            --accent-blue: #0071e3;
-            --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --paper-bg: #fdfbf7;
+            --ink-color: #2b2b2b;
+            --accent-yellow: #ffeaa7;
+            --accent-pink: #ff7675;
+            --accent-blue: #74b9ff;
+            --accent-green: #55efc4;
+            --shadow-paper: 4px 4px 0px rgba(0,0,0,0.1);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background-color: var(--bg-light);
-            color: var(--text-primary);
-            font-family: var(--font-main);
+            background-color: #f0f2f5;
+            background-image: 
+                linear-gradient(#e5e5f7 1px, transparent 1px),
+                linear-gradient(90deg, #e5e5f7 1px, transparent 1px);
+            background-size: 20px 20px; /* Grid Paper Effect */
+            color: var(--ink-color);
+            font-family: 'Inter', sans-serif;
             line-height: 1.6;
             overflow-x: hidden;
-            transition: all 0.3s ease;
+            padding-bottom: 100px;
         }
 
-        /* --- MOVING RAINBOW BACKGROUND --- */
-        .rainbow-mesh {
+        /* --- FLOATING ANIMALS (BACKGROUND) --- */
+        .floating-stickers {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
             z-index: -1;
-            background: 
-                radial-gradient(at 0% 0%, hsla(189,100%,86%,1) 0, transparent 50%), 
-                radial-gradient(at 80% 0%, hsla(308,83%,93%,1) 0, transparent 50%), 
-                radial-gradient(at 0% 50%, hsla(355,100%,93%,1) 0, transparent 50%), 
-                radial-gradient(at 80% 50%, hsla(240,100%,96%,1) 0, transparent 50%), 
-                radial-gradient(at 0% 100%, hsla(22,100%,93%,1) 0, transparent 50%), 
-                radial-gradient(at 80% 100%, hsla(242,100%,90%,1) 0, transparent 50%), 
-                radial-gradient(at 0% 0%, hsla(343,100%,90%,1) 0, transparent 50%);
-            filter: blur(60px);
-            opacity: 0.8;
-            animation: moveGradient 20s ease infinite alternate;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .sticker {
+            position: absolute;
+            font-size: 3rem;
+            opacity: 0.6;
+            filter: drop-shadow(2px 2px 0 rgba(0,0,0,0.1));
+            animation: floatAround 25s infinite linear;
+        }
+        @keyframes floatAround {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(100px, 50px) rotate(10deg); }
+            50% { transform: translate(0, 100px) rotate(-10deg); }
+            75% { transform: translate(-100px, 50px) rotate(5deg); }
+            100% { transform: translate(0, 0) rotate(0deg); }
         }
 
-        @keyframes moveGradient {
-            0% { transform: scale(1); }
-            100% { transform: scale(1.1); }
-        }
-
-        /* --- NAVIGATION --- */
+        /* --- NAVIGATION (MARKER STYLE) --- */
         .nav-bar {
             position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            padding: 10px 20px;
-            border-radius: 50px;
-            display: flex;
-            gap: 15px;
+            top: 20px; left: 50%; transform: translateX(-50%);
+            background: var(--ink-color);
+            padding: 10px 25px;
+            border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+            display: flex; gap: 15px;
             z-index: 1000;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-            border: 1px solid rgba(255,255,255,0.5);
+            box-shadow: 5px 5px 0px rgba(0,0,0,0.2);
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
         .nav-btn {
-            border: none;
-            background: transparent;
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--text-secondary);
-            cursor: pointer;
-            padding: 8px 16px;
-            border-radius: 30px;
-            transition: all 0.3s;
+            background: transparent; border: none;
+            color: white; font-family: 'Patrick Hand', cursive;
+            font-size: 1.1rem; cursor: pointer;
+            padding: 5px 10px; transition: transform 0.2s;
         }
+        .nav-btn:hover { color: var(--accent-yellow); transform: scale(1.1) rotate(-2deg); }
+        .translate-btn { color: var(--accent-green); font-weight: bold; }
 
-        .nav-btn:hover, .nav-btn.active { color: #000; background: rgba(0,0,0,0.05); }
-
-        .translate-btn {
-            background: var(--accent-blue);
-            color: white !important;
-        }
-        .translate-btn:hover { background: #005bb5; }
-
-        /* --- CONTAINER & TYPOGRAPHY --- */
+        /* --- CONTAINER --- */
         .container {
             max-width: 1000px;
             margin: 0 auto;
-            padding: 100px 20px 50px 20px;
+            padding: 120px 20px 50px 20px;
         }
 
-        h1 { font-size: 3.5rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.5rem; color: #1d1d1f; }
-        h2 { font-size: 1.8rem; margin-bottom: 1rem; color: #1d1d1f; font-weight: 600; }
-        h3 { font-size: 0.9rem; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 2rem; font-weight: 600; letter-spacing: 1px; }
+        /* --- TYPOGRAPHY (MARKER STYLE) --- */
+        h1, h2 { font-family: 'Patrick Hand', cursive; }
         
-        /* --- GLASS CARDS --- */
-        .glass-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            padding: 2.5rem;
-            margin-bottom: 2.5rem;
-            box-shadow: var(--shadow);
-            transition: transform 0.3s ease;
+        h1 {
+            font-size: 4rem; text-align: center;
+            transform: rotate(-2deg);
+            text-shadow: 3px 3px 0px var(--accent-blue);
+            margin-bottom: 0.5rem;
+            line-height: 1;
+        }
+        
+        h3 {
+            text-align: center; font-size: 1.1rem; color: #555;
+            margin-bottom: 4rem; font-weight: 600;
+            background: var(--accent-yellow);
+            display: inline-block; padding: 2px 10px;
+            transform: rotate(1deg);
+            position: relative; left: 50%; translate: -50%;
+            border-radius: 4px;
         }
 
-        .glass-card:hover { transform: translateY(-5px); box-shadow: 0 15px 50px rgba(0,0,0,0.1); }
+        /* --- PAPER CARDS --- */
+        .paper-card {
+            background: var(--paper-bg);
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+            position: relative;
+            /* The Sketchy Border CSS Trick */
+            border: 2px solid var(--ink-color);
+            border-radius: 2px 255px 3px 25px / 255px 5px 225px 5px;
+            box-shadow: var(--shadow-paper);
+            transition: transform 0.3s;
+        }
+
+        .paper-card:hover { transform: translateY(-3px) rotate(0.2deg); }
+
+        /* Tape Effect */
+        .tape {
+            position: absolute;
+            top: -15px; left: 50%; transform: translateX(-50%) rotate(-2deg);
+            width: 100px; height: 30px;
+            background: rgba(255,255,255,0.6);
+            border: 1px solid rgba(0,0,0,0.1);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
 
         .date-badge {
             display: inline-block;
+            background: var(--ink-color);
+            color: white;
+            font-family: 'Patrick Hand', cursive;
             padding: 4px 12px;
-            background: rgba(0,0,0,0.05);
             border-radius: 12px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: var(--text-secondary);
             margin-bottom: 1rem;
+            font-size: 1.1rem;
+            transform: rotate(-1deg);
         }
 
-        /* --- MEDIA GRID --- */
+        /* --- SECTION DIVIDERS --- */
+        .section-header {
+            margin: 5rem 0 3rem 0;
+            display: flex; align-items: center; gap: 15px;
+            border-bottom: 3px dashed var(--ink-color);
+            padding-bottom: 10px;
+        }
+        .section-header h2 { font-size: 2.5rem; margin: 0; }
+        .section-icon { font-size: 3rem; animation: bounce 2s infinite; }
+
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
+        /* --- MEDIA GRID (UPDATED) --- */
         .image-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 10px;
+            /* Bigger images, natural size */
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
             margin-top: 1.5rem;
         }
 
         .media-box {
-            background: #fff;
-            border-radius: 12px;
-            overflow: hidden;
-            aspect-ratio: 16/9;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            background: white;
+            padding: 10px;
+            border: 1px solid #ddd;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
             transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
         }
 
-        .media-box:hover { transform: scale(1.05); z-index: 10; }
-        .media-box img { width: 100%; height: 100%; object-fit: cover; }
-        .media-box video { width: 100%; height: 100%; object-fit: contain; }
+        .media-box:hover { transform: scale(1.02) rotate(1deg); z-index: 10; border-color: var(--ink-color); }
+
+        .media-box img, .media-box video {
+            width: 100%;
+            height: auto; /* Keeps natural aspect ratio */
+            display: block;
+            border-radius: 2px;
+        }
         
         .media-label {
-            position: absolute;
-            bottom: 2px; right: 5px;
-            font-size: 0.6rem; color: rgba(0,0,0,0.5);
-            background: rgba(255,255,255,0.8);
-            padding: 1px 4px; border-radius: 4px;
+            font-family: 'Patrick Hand', cursive;
+            font-size: 0.9rem; color: #666;
+            margin-top: 5px; text-align: right;
         }
 
-        /* --- VOCAB HIGHLIGHTS --- */
+        /* --- TRANSLATION HIGHLIGHTS --- */
+        .t-text span.cn { display: none; color: #666; font-size: 0.95em; display: block; margin-top: 8px; font-weight: normal; border-top: 1px dotted #ccc; padding-top: 5px; }
+        body.chinese-mode .t-text span.cn { display: block; }
+        
         .vocab {
-            color: var(--accent-blue);
-            font-weight: 600;
+            background: linear-gradient(120deg, var(--accent-yellow) 0%, var(--accent-yellow) 100%);
+            background-repeat: no-repeat;
+            background-size: 100% 40%;
+            background-position: 0 88%;
             cursor: help;
-            border-bottom: 1px dashed rgba(0, 113, 227, 0.3);
+            font-weight: 700;
         }
 
         /* --- GAME SECTION --- */
-        .game-container { text-align: center; background: #fff; padding: 3rem; }
-        .option-btn { background: #f5f5f7; color: #1d1d1f; border: 1px solid #d2d2d7; padding: 1rem; border-radius: 12px; cursor: pointer; transition: 0.2s; font-size: 1rem; margin: 5px; display: block; width: 100%; }
-        .option-btn:hover { background: #e8e8ed; }
-        .option-btn.correct { background: #34c759; color: white; border-color: #34c759; }
-        .option-btn.wrong { background: #ff3b30; color: white; border-color: #ff3b30; animation: shake 0.4s; }
-
-        .humor-text {
-            font-size: 1.2rem; color: #ff3b30; font-weight: 800; margin-top: 10px; display: inline-block;
-            transform: rotate(-2deg); border: 2px solid #ff3b30; padding: 5px 10px; border-radius: 8px;
+        .quiz-container { 
+            text-align: center; background: #fff; padding: 3rem; 
+            border: 3px solid var(--ink-color); border-radius: 20px;
+            position: relative;
         }
+        .option-btn {
+            background: white; border: 2px solid var(--ink-color);
+            padding: 1rem; border-radius: 10px; cursor: pointer;
+            font-family: 'Inter', sans-serif; font-weight: 600;
+            margin: 8px 0; width: 100%; text-align: left;
+            transition: 0.2s; box-shadow: 3px 3px 0 var(--ink-color);
+        }
+        .option-btn:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--ink-color); }
+        .option-btn:active { transform: translate(0, 0); box-shadow: 0 0 0; }
+        
+        .option-btn.correct { background: var(--accent-green); }
+        .option-btn.wrong { background: var(--accent-pink); animation: shake 0.4s; }
 
-        .section-divider { margin: 4rem 0 2rem 0; padding-bottom: 10px; border-bottom: 1px solid rgba(0,0,0,0.1); display: flex; align-items: center; gap: 15px; }
-        .section-divider h2 { margin: 0; }
         @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+
+        .humor-stamp {
+            position: absolute; bottom: 30px; right: 30px;
+            font-family: 'Patrick Hand', cursive;
+            color: #d63031; border: 4px solid #d63031;
+            padding: 10px 20px; font-size: 1.8rem; font-weight: bold;
+            transform: rotate(-15deg); opacity: 0.9;
+            background: rgba(255,255,255,0.8);
+            z-index: 20;
+        }
 
     </style>
 </head>
 <body>
 
-    <div class="rainbow-mesh"></div>
+    <div class="floating-stickers">
+        <div class="sticker" style="top: 10%; left: 10%;">🦊</div>
+        <div class="sticker" style="top: 20%; right: 15%; animation-delay: 2s;">🐸</div>
+        <div class="sticker" style="top: 60%; left: 5%; animation-delay: 5s;">🐼</div>
+        <div class="sticker" style="top: 80%; right: 10%; animation-delay: 1s;">🐙</div>
+        <div class="sticker" style="top: 40%; left: 50%; animation-delay: 3s;">🚀</div>
+    </div>
 
     <div class="nav-bar">
-        <button class="nav-btn" onclick="scrollToSection('week1')">12-19 Jan</button>
-        <button class="nav-btn" onclick="scrollToSection('week2')">20-30 Jan</button>
-        <button class="nav-btn translate-btn" onclick="toggleLanguage()">Translate / 翻译</button>
+        <button class="nav-btn" onclick="scrollToSection('week1')">Week 1 (Jan 12-19)</button>
+        <button class="nav-btn" onclick="scrollToSection('week2')">Week 2 (Jan 20-30)</button>
+        <button class="nav-btn" onclick="scrollToSection('week3')">Week 3 (Feb 2-6)</button>
+        <button class="nav-btn translate-btn" onclick="toggleLanguage()">文 / EN</button>
     </div>
 
     <div class="container">
         
         <header>
-            <h1 class="t-text" 
-                data-en="Weekly Creative Retrospective" 
-                data-cn="每周创意回顾">
-                Weekly Creative Retrospective
+            <h1 class="t-text">
+                Creative Log
+                <span class="cn">创意日志</span>
             </h1>
-            <h3 class="t-text" 
-                data-en="Raghav Sharma | Graphic Intern" 
-                data-cn="Raghav Sharma | 平面设计实习生">
+            <h3 class="t-text">
                 Raghav Sharma | Graphic Intern
+                <span class="cn">Raghav Sharma | 平面设计实习生</span>
             </h3>
         </header>
 
         <div id="week1">
-            <div class="section-divider">
-                <span style="font-size: 2rem;">🗓️</span>
-                <h2 class="t-text" 
-                    data-en="Phase 1: The Foundation" 
-                    data-cn="第一阶段：基础奠定">
-                    Phase 1: The Foundation
-                </h2>
+            <div class="section-header">
+                <span class="section-icon">🌱</span>
+                <h2 class="t-text">Phase 1: The Foundation <span class="cn">第一阶段：基础奠定</span></h2>
             </div>
 
-            <div class="glass-card">
+            <div class="paper-card">
+                <div class="tape"></div>
                 <span class="date-badge">Jan 12</span>
-                <h2 class="t-text" data-en="Strategic Genesis" data-cn="战略起源">Strategic Genesis</h2>
-                <p class="t-text" 
-                   data-en="Analyzed the competitive landscape. We identified Coocaa’s opportunity to be the avant-garde challenger, using evolutionary psychology to trigger attention." 
-                   data-cn="分析了竞争格局。我们确定了 Coocaa 作为前卫挑战者的机会，利用进化心理学来引发关注。">
-                   Analyzed the <span class="vocab">competitive landscape</span>. We identified Coocaa’s opportunity to be the <span class="vocab">avant-garde</span> challenger, using <span class="vocab">evolutionary psychology</span> to trigger attention.
+                <h2 class="t-text">Strategic Genesis <span class="cn">战略起源</span></h2>
+                <p class="t-text">
+                    Analyzed the <span class="vocab">competitive landscape</span>. We identified Coocaa’s opportunity to be the avant-garde challenger, using evolutionary psychology to trigger attention.
+                    <span class="cn">分析了竞争格局。我们确定了 Coocaa 作为前卫挑战者的机会，利用进化心理学来引发关注。</span>
                 </p>
                 <div class="image-grid">
-                    <div class="media-box"><img src="1.png"><span class="media-label">1.png</span></div>
-                    <div class="media-box"><img src="2.png"><span class="media-label">2.png</span></div>
-                    <div class="media-box"><img src="3.png"><span class="media-label">3.png</span></div>
+                    <div class="media-box"><img src="1.png"><div class="media-label">1.png</div></div>
+                    <div class="media-box"><img src="2.png"><div class="media-label">2.png</div></div>
+                    <div class="media-box"><img src="3.png"><div class="media-label">3.png</div></div>
                 </div>
             </div>
 
-            <div class="glass-card">
+            <div class="paper-card">
+                <div class="tape"></div>
                 <span class="date-badge">Jan 13</span>
-                <h2 class="t-text" data-en="Concept Incubation" data-cn="概念孵化">Concept Incubation</h2>
-                <p class="t-text"
-                   data-en="Deep dive into 'Halo Control' hardware. We conceptualized 'The Divine Portal,' a juxtaposition of traditional culture and futuristic tech."
-                   data-cn="深入研究“光晕控制”硬件。我们构思了“神圣门户”，将传统文化与未来科技并列。">
-                   Deep dive into "Halo Control" hardware. We conceptualized "The Divine Portal," a <span class="vocab">juxtaposition</span> of traditional culture and futuristic tech.
+                <h2 class="t-text">Concept Incubation <span class="cn">概念孵化</span></h2>
+                <p class="t-text">
+                    Deep dive into "Halo Control" hardware. We conceptualized "The Divine Portal," a <span class="vocab">juxtaposition</span> of traditional culture and futuristic tech.
+                    <span class="cn">深入研究“光晕控制”硬件。我们构思了“神圣门户”，将传统文化与未来科技并列。</span>
                 </p>
                 <div class="image-grid">
-                    <div class="media-box"><img src="4.png"><span class="media-label">4.png</span></div>
-                    <div class="media-box"><img src="5.png"><span class="media-label">5.png</span></div>
-                    <div class="media-box"><video src="6.mp4" controls muted loop playsinline></video></div>
+                    <div class="media-box"><img src="4.png"><div class="media-label">4.png</div></div>
+                    <div class="media-box"><img src="5.png"><div class="media-label">5.png</div></div>
+                    <div class="media-box"><video src="6.mp4" controls muted playsinline></video><div class="media-label">6.mp4</div></div>
                 </div>
             </div>
 
-            <div class="glass-card">
+            <div class="paper-card">
+                <div class="tape"></div>
+                <span class="date-badge">Jan 14 (WFH)</span>
+                <h2 class="t-text">Social Visuals <span class="cn">社交视觉</span></h2>
+                <p class="t-text">
+                    Focused on Instagram minimalism. Created "Never Miss the Detail" concept using glass reflections.
+                    <span class="cn">专注于 Instagram 极简主义。使用玻璃反射创建了“不错过细节”概念。</span>
+                </p>
+                <div class="image-grid">
+                    <div class="media-box"><img src="7.png"><div class="media-label">7.png</div></div>
+                    <div class="media-box"><img src="8.png"><div class="media-label">8.png</div></div>
+                    <div class="media-box"><video src="9.mp4" controls muted playsinline></video><div class="media-label">9.mp4</div></div>
+                </div>
+            </div>
+
+            <div class="paper-card">
+                <div class="tape"></div>
                 <span class="date-badge">Jan 15</span>
-                <h2 class="t-text" data-en="Cultural Resonance" data-cn="文化共鸣">Cultural Resonance</h2>
-                <p class="t-text"
-                   data-en="Executed Real-Time Marketing for Makar Sankranti. Blending festival kites with screen technology to foster an emotional connection."
-                   data-cn="执行了马卡尔桑克拉提节的实时营销。将节日风筝与屏幕技术融合，建立情感联系。">
-                   Executed Real-Time Marketing for Makar Sankranti. Blending festival kites with screen technology to foster an <span class="vocab">emotional connection</span>.
+                <h2 class="t-text">Cultural Resonance <span class="cn">文化共鸣</span></h2>
+                <p class="t-text">
+                    Executed Real-Time Marketing for Makar Sankranti. Blending festival kites with screen technology.
+                    <span class="cn">执行了马卡尔桑克拉提节的实时营销。将节日风筝与屏幕技术融合。</span>
                 </p>
                 <div class="image-grid">
-                    <div class="media-box"><img src="10.png"><span class="media-label">10.png</span></div>
-                    <div class="media-box"><img src="11.png"><span class="media-label">11.png</span></div>
-                    <div class="media-box"><video src="12.mp4" controls muted loop playsinline></video></div>
+                    <div class="media-box"><img src="10.png"><div class="media-label">10.png</div></div>
+                    <div class="media-box"><img src="11.png"><div class="media-label">11.png</div></div>
+                    <div class="media-box"><video src="12.mp4" controls muted playsinline></video><div class="media-label">12.mp4</div></div>
                 </div>
             </div>
 
-            <div class="glass-card">
-                <span class="date-badge">Jan 16-19</span>
-                <h2 class="t-text" data-en="The Creative Sprint" data-cn="创意冲刺">The Creative Sprint</h2>
-                <p class="t-text"
-                   data-en="I was highly prolific working from home. Rendered 50+ frames and 8 motion assets to fix the monotony of static Amazon listings."
-                   data-cn="我在家工作非常多产。渲染了50多帧和8个动态资产，解决了亚马逊列表的单调问题。">
-                   I was highly <span class="vocab">prolific</span> working from home. Rendered 50+ frames and 8 motion assets to fix the <span class="vocab">monotony</span> of static Amazon listings.
+            <div class="paper-card" style="border-color: var(--accent-blue);">
+                <div class="tape"></div>
+                <span class="date-badge">Jan 16-18 (Weekend Sprint)</span>
+                <h2 class="t-text">Motion & Assets <span class="cn">动态与资产</span></h2>
+                <p class="t-text">
+                    Rendered 50+ frames and 8 motion assets to fix the <span class="vocab">monotony</span> of static Amazon listings.
+                    <span class="cn">渲染了50多帧和8个动态资产，解决了亚马逊列表的单调问题。</span>
                 </p>
                 <div class="image-grid">
-                    <div class="media-box"><img src="13.png"><span class="media-label">13.png</span></div>
-                    <div class="media-box"><img src="14.png"><span class="media-label">14.png</span></div>
-                    <div class="media-box"><video src="16.mp4" controls muted loop playsinline></video></div>
-                    <div class="media-box"><img src="17.png"><span class="media-label">17.png</span></div>
-                    <div class="media-box"><img src="18.png"><span class="media-label">18.png</span></div>
-                    <div class="media-box"><video src="19.mp4" controls muted loop playsinline></video></div>
-                    <div class="media-box"><img src="20.png"><span class="media-label">20.png</span></div>
-                    <div class="media-box"><video src="21.mp4" controls muted loop playsinline></video></div>
-                    <div class="media-box"><img src="22.png"><span class="media-label">22.png</span></div>
+                    <div class="media-box"><img src="13.png"><div class="media-label">13.png</div></div>
+                    <div class="media-box"><img src="14.png"><div class="media-label">14.png</div></div>
+                    <div class="media-box"><img src="15.png"><div class="media-label">15.png</div></div>
+                    <div class="media-box"><video src="16.mp4" controls muted playsinline></video><div class="media-label">16.mp4</div></div>
+                    <div class="media-box"><img src="17.png"><div class="media-label">17.png</div></div>
+                    <div class="media-box"><img src="18.png"><div class="media-label">18.png</div></div>
+                    <div class="media-box"><video src="19.mp4" controls muted playsinline></video><div class="media-label">19.mp4</div></div>
+                    <div class="media-box"><img src="20.png"><div class="media-label">20.png</div></div>
+                    <div class="media-box"><video src="21.mp4" controls muted playsinline></video><div class="media-label">21.mp4</div></div>
+                </div>
+            </div>
+
+            <div class="paper-card">
+                <div class="tape"></div>
+                <span class="date-badge">Jan 19</span>
+                <h2 class="t-text">Packaging Polish <span class="cn">包装打磨</span></h2>
+                <p class="t-text">
+                    Finalized packaging SKUs for flagship models using AI upscaling.
+                    <span class="cn">使用 AI 放大技术完成了旗舰型号的包装 SKU。</span>
+                </p>
+                <div class="image-grid">
+                    <div class="media-box"><img src="22.png"><div class="media-label">22.png</div></div>
                 </div>
             </div>
         </div>
 
         <div id="week2">
-            <div class="section-divider">
-                <span style="font-size: 2rem;">🚀</span>
-                <h2 class="t-text" data-en="Phase 2: Scale & Refinement" data-cn="第二阶段：规模与细化">Phase 2: Scale & Refinement</h2>
+            <div class="section-header">
+                <span class="section-icon">🚀</span>
+                <h2 class="t-text">Phase 2: Scale <span class="cn">第二阶段：规模化</span></h2>
             </div>
 
-            <div class="glass-card">
-                <span class="date-badge">Jan 20 - 21</span>
-                <h2 class="t-text" data-en="Creatives & Correction" data-cn="创意与修正">Creatives & Correction</h2>
-                <p class="t-text"
-                   data-en="This phase began with intensive technical work. I focused on Amazon SKU refinement, ensuring color accuracy across all product lines. Following this, I developed the storyboard for the 'NEVER MISS THE CATCH' concept."
-                   data-cn="这一阶段始于密集的技术工作。我专注于亚马逊SKU细化，确保所有产品线的颜色准确性。随后，我开发了“不错过每一次捕捉”概念的故事板。">
-                   This phase began with intensive technical work. I focused on Amazon SKU <span class="vocab">refinement</span>, ensuring color accuracy across all product lines. Following this, I developed the storyboard for the "NEVER MISS THE CATCH" concept.
-                </p>
-                <p class="t-text"
-                   data-en="For the Coocaa Amazon Store, I started designing the banner infrastructure. I created multiple layout options to ensure we have a robust visual hierarchy."
-                   data-cn="对于 Coocaa 亚马逊商店，我开始设计横幅基础设施。我创建了多种布局选项，以确保留有强大的视觉层次结构。">
-                   For the Coocaa Amazon Store, I started designing the banner infrastructure. I created multiple layout options to ensure we have a robust visual hierarchy.
+            <div class="paper-card">
+                <div class="tape"></div>
+                <span class="date-badge">Jan 20-21</span>
+                <h2 class="t-text">Storyboard & SKU <span class="cn">故事板与SKU</span></h2>
+                <p class="t-text">
+                    Focused on Amazon SKU refinement. Developed 'NEVER MISS THE CATCH' storyboard highlighting high refresh rates.
+                    <span class="cn">专注于亚马逊 SKU 细化。开发了强调高刷新率的“不错过每一次捕捉”故事板。</span>
                 </p>
                 <div class="image-grid">
-                    <div class="media-box"><img src="43.png"><span class="media-label">43.png</span></div>
-                    <div class="media-box"><img src="23.png"><span class="media-label">23.png</span></div>
-                    <div class="media-box"><img src="24.png"><span class="media-label">24.png</span></div>
+                    <div class="media-box"><img src="43.png"><div class="media-label">43.png</div></div>
+                    <div class="media-box"><img src="23.png"><div class="media-label">23.png</div></div>
+                    <div class="media-box"><img src="24.png"><div class="media-label">24.png</div></div>
                 </div>
             </div>
 
-            <div class="glass-card">
-                <span class="date-badge">Jan 22 - 23</span>
-                <h2 class="t-text" data-en="Massive Iteration Sprint" data-cn="大规模迭代冲刺">Massive Iteration Sprint</h2>
-                <p class="t-text"
-                   data-en="This was a high-volume production period. To solve the 'Sea of Sameness' problem on Amazon, I generated a massive array of design variations covering two key themes: the patriotic 'Republic Day' and standard 'Daily Use' scenarios."
-                   data-cn="这是一个高产量的时期。为了解决亚马逊上的“千篇一律”问题，我生成了大量的设计变体，涵盖两个关键主题：爱国的“共和国日”和标准的“日常使用”场景。">
-                   This was a high-volume production period. To solve the "Sea of Sameness" problem on Amazon, I generated a massive array of design <span class="vocab">variations</span> covering two key themes: the patriotic "Republic Day" and standard "Daily Use" scenarios.
-                </p>
-                <p class="t-text"
-                   data-en="My goal was to create a diverse asset library so we can A/B test different visual styles. This involved creating 74 unique variations over just 48 hours to find the perfect look."
-                   data-cn="我的目标是创建一个多样化的资产库，以便我们可以 A/B 测试不同的视觉风格。这涉及在短短 48 小时内创建 74 个独特的变体，以找到完美的外观。">
-                   My goal was to create a diverse asset library so we can A/B test different visual styles. This involved creating <strong>74 unique variations</strong> over just 48 hours to find the perfect look.
-                </p>
-                
-                <p style="margin-top:10px; font-weight:600; color:#0071e3;" class="t-text"
-                   data-en="Displaying all 18 rendered outputs:" data-cn="展示所有18个渲染输出：">
-                   Displaying all 18 rendered outputs:
+            <div class="paper-card">
+                <div class="tape"></div>
+                <span class="date-badge">Jan 22-23</span>
+                <h2 class="t-text">Massive Iteration <span class="cn">大规模迭代</span></h2>
+                <p class="t-text">
+                    Generated 74 design <span class="vocab">variations</span> for the Coocaa Amazon Store (Republic Day & Daily Use).
+                    <span class="cn">为 Coocaa 亚马逊商店生成了 74 个设计变体。</span>
                 </p>
                 <div class="image-grid">
-                    <div class="media-box"><img src="25.png"><span class="media-label">25.png</span></div>
-                    <div class="media-box"><img src="26.png"><span class="media-label">26.png</span></div>
-                    <div class="media-box"><img src="27.png"><span class="media-label">27.png</span></div>
-                    <div class="media-box"><img src="28.png"><span class="media-label">28.png</span></div>
-                    <div class="media-box"><img src="29.png"><span class="media-label">29.png</span></div>
-                    <div class="media-box"><img src="30.png"><span class="media-label">30.png</span></div>
-                    <div class="media-box"><img src="31.png"><span class="media-label">31.png</span></div>
-                    <div class="media-box"><img src="32.png"><span class="media-label">32.png</span></div>
-                    <div class="media-box"><img src="33.png"><span class="media-label">33.png</span></div>
-                    <div class="media-box"><img src="34.png"><span class="media-label">34.png</span></div>
-                    <div class="media-box"><img src="35.png"><span class="media-label">35.png</span></div>
-                    <div class="media-box"><img src="36.png"><span class="media-label">36.png</span></div>
-                    <div class="media-box"><img src="37.png"><span class="media-label">37.png</span></div>
-                    <div class="media-box"><img src="38.png"><span class="media-label">38.png</span></div>
-                    <div class="media-box"><img src="39.png"><span class="media-label">39.png</span></div>
-                    <div class="media-box"><img src="40.png"><span class="media-label">40.png</span></div>
-                    <div class="media-box"><img src="41.png"><span class="media-label">41.png</span></div>
-                    <div class="media-box"><img src="42.png"><span class="media-label">42.png</span></div>
+                    <div class="media-box"><img src="25.png"><div class="media-label">25.png</div></div>
+                    <div class="media-box"><img src="26.png"><div class="media-label">26.png</div></div>
+                    <div class="media-box"><img src="27.png"><div class="media-label">27.png</div></div>
+                    <div class="media-box"><img src="28.png"><div class="media-label">28.png</div></div>
+                    <div class="media-box"><img src="29.png"><div class="media-label">29.png</div></div>
+                    <div class="media-box"><img src="30.png"><div class="media-label">30.png</div></div>
+                    <div class="media-box"><img src="31.png"><div class="media-label">31.png</div></div>
+                    <div class="media-box"><img src="32.png"><div class="media-label">32.png</div></div>
+                    <div class="media-box"><img src="33.png"><div class="media-label">33.png</div></div>
+                    <div class="media-box"><img src="34.png"><div class="media-label">34.png</div></div>
+                    <div class="media-box"><img src="35.png"><div class="media-label">35.png</div></div>
+                    <div class="media-box"><img src="36.png"><div class="media-label">36.png</div></div>
+                    <div class="media-box"><img src="37.png"><div class="media-label">37.png</div></div>
+                    <div class="media-box"><img src="38.png"><div class="media-label">38.png</div></div>
+                    <div class="media-box"><img src="39.png"><div class="media-label">39.png</div></div>
+                    <div class="media-box"><img src="40.png"><div class="media-label">40.png</div></div>
+                    <div class="media-box"><img src="41.png"><div class="media-label">41.png</div></div>
+                    <div class="media-box"><img src="42.png"><div class="media-label">42.png</div></div>
                 </div>
             </div>
 
-            <div class="glass-card" style="border-color: rgba(255, 59, 48, 0.3);">
-                <span class="date-badge">Jan 24-26 (Weekend + Republic Day)</span>
-                <h2 class="t-text" data-en="Republic Day Campaign" data-cn="共和国日营销">Republic Day Campaign</h2>
-                <p class="t-text"
-                   data-en="For the national holiday, I wanted visuals that were bold and cinematic. I worked on 2 high-energy video promotions and 3 static posters to capture the festive spirit."
-                   data-cn="对于国定假日，我想要大胆且电影化的视觉效果。我制作了2个高能视频促销和3张静态海报来捕捉节日气氛。">
-                   For the national holiday, I wanted visuals that were bold and cinematic. I worked on 2 high-energy video promotions and 3 static posters to capture the festive spirit.
+            <div class="paper-card" style="border-color: var(--accent-pink);">
+                <div class="tape"></div>
+                <span class="date-badge">Jan 24-26 (Republic Day)</span>
+                <h2 class="t-text">Festive Campaign <span class="cn">节日营销</span></h2>
+                <p class="t-text">
+                    Created high-energy video promotions and posters. Spent hours on AI drafts to blend patriotism with tech.
+                    <span class="cn">制作了高能视频促销和海报。花了很多时间在AI草稿上，以融合爱国主义与科技。</span>
                 </p>
-                <p class="t-text"
-                   data-en="Behind the Scenes: I spent hours generating 23 different AI drafts to get the perfect 'Indian Patriotism' look, trying to blend the flag colors with our tech aesthetics..."
-                   data-cn="幕后花絮：我花了数小时生成23个不同的AI草稿，以获得完美的“印度爱国主义”外观，试图将国旗颜色与我们的科技美学相融合...">
-                   <em>Behind the Scenes:</em> I spent hours generating 23 different AI drafts to get the perfect "Indian Patriotism" look, trying to blend the flag colors with our tech aesthetics...
-                </p>
-                <div class="humor-text t-text" data-en="USED NONE! 😒" data-cn="一个没用！😒">USED NONE! 😒</div>
+                <div class="humor-stamp">USED NONE! 😒</div>
                 <div class="image-grid">
-                    <div class="media-box"><video src="44.mp4" controls muted loop playsinline></video><span class="media-label">44.mp4</span></div>
-                    <div class="media-box"><video src="45.mp4" controls muted loop playsinline></video><span class="media-label">45.mp4</span></div>
-                    <div class="media-box"><img src="46.png"><span class="media-label">46.png</span></div>
-                    <div class="media-box"><img src="47.png"><span class="media-label">47.png</span></div>
-                    <div class="media-box"><img src="48.png"><span class="media-label">48.png</span></div>
+                    <div class="media-box"><video src="44.mp4" controls muted playsinline></video><div class="media-label">44.mp4</div></div>
+                    <div class="media-box"><video src="45.mp4" controls muted playsinline></video><div class="media-label">45.mp4</div></div>
+                    <div class="media-box"><img src="46.png"><div class="media-label">46.png</div></div>
+                    <div class="media-box"><img src="47.png"><div class="media-label">47.png</div></div>
+                    <div class="media-box"><img src="48.png"><div class="media-label">48.png</div></div>
                 </div>
             </div>
 
-            <div class="glass-card">
-                <span class="date-badge">Jan 27 - 28</span>
-                <h2 class="t-text" data-en="Mini LED & Store Expansion" data-cn="Mini LED 与商店扩展">Mini LED & Store Expansion</h2>
-                <p class="t-text"
-                   data-en="As the month closed, I shifted focus back to the core Amazon Store architecture. I produced 40+ new variations, heavily focusing on composition for the Mini LED posters."
-                   data-cn="随着月份结束，我将重心转回核心亚马逊商店架构。我制作了40多个新变体，重点关注 Mini LED 海报的构图。">
-                   As the month closed, I shifted focus back to the core Amazon Store architecture. I produced 40+ new variations, heavily focusing on <span class="vocab">composition</span> for the Mini LED posters.
-                </p>
-                <p class="t-text"
-                   data-en="The challenge was fitting complex tech specs into clean, readable store cards. I finalized 9 distinct designs for posters and drafts for the video frames."
-                   data-cn="挑战在于将复杂的技术规格融入干净、易读的商店卡片中。我最终确定了9个独特的海报设计和视频帧草稿。">
-                   The challenge was fitting complex tech specs into clean, readable store cards. I finalized 9 distinct designs for posters and drafts for the video frames.
+            <div class="paper-card">
+                <div class="tape"></div>
+                <span class="date-badge">Jan 27-28</span>
+                <h2 class="t-text">Mini LED Expansion <span class="cn">Mini LED 扩展</span></h2>
+                <p class="t-text">
+                    Produced 40+ new variations focusing on composition for Mini LED posters.
+                    <span class="cn">为 Mini LED 海报制作了 40 多个注重构图的新变体。</span>
                 </p>
                 <div class="image-grid">
-                    <div class="media-box"><img src="49.png"><span class="media-label">49.png</span></div>
-                    <div class="media-box"><img src="50.png"><span class="media-label">50.png</span></div>
-                    <div class="media-box"><img src="51.png"><span class="media-label">51.png</span></div>
-                    <div class="media-box"><img src="52.png"><span class="media-label">52.png</span></div>
-                    <div class="media-box"><img src="53.png"><span class="media-label">53.png</span></div>
-                    <div class="media-box"><img src="54.png"><span class="media-label">54.png</span></div>
-                    <div class="media-box"><img src="55.png"><span class="media-label">55.png</span></div>
-                    <div class="media-box"><img src="56.png"><span class="media-label">56.png</span></div>
-                    <div class="media-box"><img src="57.png"><span class="media-label">57.png</span></div>
-                    <div class="media-box"><img src="58.png"><span class="media-label">58.png</span></div>
-                    <div class="media-box"><img src="59.png"><span class="media-label">59.png</span></div>
+                    <div class="media-box"><img src="49.png"><div class="media-label">49.png</div></div>
+                    <div class="media-box"><img src="50.png"><div class="media-label">50.png</div></div>
+                    <div class="media-box"><img src="51.png"><div class="media-label">51.png</div></div>
+                    <div class="media-box"><img src="52.png"><div class="media-label">52.png</div></div>
+                    <div class="media-box"><img src="53.png"><div class="media-label">53.png</div></div>
+                    <div class="media-box"><img src="54.png"><div class="media-label">54.png</div></div>
+                    <div class="media-box"><img src="55.png"><div class="media-label">55.png</div></div>
+                    <div class="media-box"><img src="56.png"><div class="media-label">56.png</div></div>
+                    <div class="media-box"><img src="57.png"><div class="media-label">57.png</div></div>
+                    <div class="media-box"><img src="58.png"><div class="media-label">58.png</div></div>
+                    <div class="media-box"><img src="59.png"><div class="media-label">59.png</div></div>
                 </div>
             </div>
 
-            <div class="glass-card">
+            <div class="paper-card" style="background: #e1f5fe;">
+                <div class="tape"></div>
                 <span class="date-badge">Jan 29</span>
-                <h2 class="t-text" data-en="Leave (Inspiration Day)" data-cn="休假（灵感日）">Leave (Inspiration Day)</h2>
-                <p class="t-text"
-                   data-en="Attended the College International Exhibition for best project. 😎"
-                   data-cn="参加了大学国际展览以收集新的设计趋势和灵感。😎">
-                   Attended the College International Exhibition for best project. 😎
+                <h2 class="t-text">Leave (Inspiration) <span class="cn">休假（灵感）</span></h2>
+                <p class="t-text">
+                    Attended College International Exhibition.
+                    <span class="cn">参加了大学国际展览。</span>
                 </p>
             </div>
 
-            <div class="glass-card">
+            <div class="paper-card">
+                <div class="tape"></div>
                 <span class="date-badge">Jan 30</span>
-                <h2 class="t-text" data-en="Final Refinement (SFX)" data-cn="最终完善 (音效)">Final Refinement (SFX)</h2>
-                <p class="t-text"
-                   data-en="The month ended with detailed motion work. I refined the speed curves of the Mini LED videos to ensure silky smooth animation and layered in Sound SFX to give the visuals weight and impact."
-                   data-cn="本月以详细的动态工作结束。我调整了 Mini LED 视频的速度曲线以确保丝般顺滑的动画，并分层添加了音效，赋予视觉效果重量和冲击力。">
-                   The month ended with detailed motion work. I refined the speed curves of the Mini LED videos to ensure silky smooth animation and layered in <span class="vocab">Sound SFX</span> to give the visuals weight and impact.
+                <h2 class="t-text">Video Polish <span class="cn">视频完善</span></h2>
+                <p class="t-text">
+                    Refined speed curves and added Sound SFX for impact.
+                    <span class="cn">完善了速度曲线并添加了音效以增加冲击力。</span>
                 </p>
                 <div class="image-grid">
-                    <div class="media-box"><video src="60.mp4" controls muted loop playsinline></video><span class="media-label">60.mp4</span></div>
+                    <div class="media-box"><video src="60.mp4" controls muted playsinline></video><div class="media-label">60.mp4</div></div>
                 </div>
             </div>
         </div>
 
-        <div class="glass-card game-container">
-            <h2 class="t-text" 
-                data-en="✨ MS. WALI'S ENGLISH CHALLENGE ✨" 
-                data-cn="✨ 瓦利女士的英语挑战 ✨">
-                ✨ MS. WALI'S ENGLISH CHALLENGE ✨
+        <div id="week3">
+            <div class="section-header">
+                <span class="section-icon">✨</span>
+                <h2 class="t-text">Phase 3: Refinement <span class="cn">第三阶段：精细化</span></h2>
+            </div>
+
+            <div class="paper-card" style="border-color: var(--accent-yellow);">
+                <div class="tape"></div>
+                <span class="date-badge">Feb 2</span>
+                <h2 class="t-text">Cross-Brand Editing <span class="cn">跨品牌编辑</span></h2>
+                <p class="t-text">
+                    Edited promo video for <strong>PHILIPS PFT6290/94</strong> and drafted the story breakdown for <strong>Xiaomi FantastiQ LED</strong>.
+                    <span class="cn">编辑了 PHILIPS PFT6290/94 的宣传视频，并起草了小米 FantastiQ LED 的故事大纲。</span>
+                </p>
+                <p class="t-text">
+                    Also worked on <span class="vocab">enhancement</span> for the Coocaa Mini LED video.
+                    <span class="cn">还致力于 Coocaa Mini LED 视频的增强工作。</span>
+                </p>
+                <p style="font-size: 0.9rem; color: #666; margin-top: 5px;">
+                    <strong>Output:</strong> 17 Frame Edits, 9 Video Generations, 10 Post-Compositing.
+                </p>
+                <div class="image-grid">
+                    <div class="media-box"><img src="61.png"><div class="media-label">61.png</div></div>
+                    <div class="media-box"><img src="62.png"><div class="media-label">62.png</div></div>
+                    <div class="media-box"><video src="63.mp4" controls muted playsinline></video><div class="media-label">63.mp4</div></div>
+                </div>
+            </div>
+
+            <div class="paper-card">
+                <div class="tape"></div>
+                <span class="date-badge">Feb 3</span>
+                <h2 class="t-text">Compositing & Framing <span class="cn">合成与构图</span></h2>
+                <p class="t-text">
+                    Refined Amazon Store Cards and worked on Mini LED video framing. Focused on post-<span class="vocab">compositing</span> to blend layers seamlessly.
+                    <span class="cn">完善了亚马逊商店卡片并致力于 Mini LED 视频构图。专注于后期合成以无缝融合图层。</span>
+                </p>
+                <p style="font-size: 0.9rem; color: #666; margin-top: 5px;">
+                    <strong>Output:</strong> 28 Image Frames, 5 Video Frames.
+                </p>
+                <div class="image-grid">
+                    <div class="media-box"><img src="63.png"><div class="media-label">63.png</div></div>
+                    <div class="media-box"><img src="64.png"><div class="media-label">64.png</div></div>
+                    <div class="media-box"><video src="64.mp4" controls muted playsinline></video><div class="media-label">64.mp4</div></div>
+                    <div class="media-box"><img src="65.png"><div class="media-label">65.png</div></div>
+                </div>
+            </div>
+
+            <div class="paper-card">
+                <div class="tape"></div>
+                <span class="date-badge">Feb 4</span>
+                <h2 class="t-text">Design Refinements <span class="cn">设计优化</span></h2>
+                <p class="t-text">
+                    Continued polishing the Coocaa Amazon Store cards. Implemented new design layouts based on feedback.
+                    <span class="cn">继续打磨 Coocaa 亚马逊商店卡片。根据反馈实施了新的设计布局。</span>
+                </p>
+                <div class="image-grid">
+                    <div class="media-box"><img src="66.png"><div class="media-label">66.png</div></div>
+                    <div class="media-box"><img src="67.png"><div class="media-label">67.png</div></div>
+                </div>
+            </div>
+
+            <div class="paper-card" style="background: #e1f5fe;">
+                <div class="tape"></div>
+                <span class="date-badge">Feb 5</span>
+                <h2 class="t-text">International Competition <span class="cn">国际竞赛</span></h2>
+                <p class="t-text">
+                    Leave: Participated in the <strong>International Technovation Project</strong> competition at university. 🎓
+                    <span class="cn">休假：参加了大学的国际技术创新项目竞赛。🎓</span>
+                </p>
+            </div>
+
+            <div class="paper-card">
+                <div class="tape"></div>
+                <span class="date-badge">Feb 6</span>
+                <h2 class="t-text">Catalog & Video <span class="cn">目录与视频</span></h2>
+                <p class="t-text">
+                    Rendered the Coocaa Catalog cover image and finalized Mini LED video edits.
+                    <span class="cn">渲染了 Coocaa 目录封面图像并完成了 Mini LED 视频编辑。</span>
+                </p>
+                <p style="font-size: 0.9rem; color: #666; margin-top: 5px;">
+                    <strong>Output:</strong> 16 Design Variations, 24 Edits.
+                </p>
+                <div class="image-grid">
+                    <div class="media-box"><img src="69.png"><div class="media-label">69.png</div></div>
+                    <div class="media-box"><img src="70.png"><div class="media-label">70.png</div></div>
+                    <div class="media-box"><img src="71.png"><div class="media-label">71.png</div></div>
+                    <div class="media-box"><img src="72.png"><div class="media-label">72.png</div></div>
+                    <div class="media-box"><img src="73.png"><div class="media-label">73.png</div></div>
+                    <div class="media-box"><img src="74.png"><div class="media-label">74.png</div></div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="quiz-container">
+            <div class="tape"></div>
+            <h2 class="t-text">
+                🧩 Ms. Wali's Fun English Game
+                <span class="cn">🧩 瓦利女士的趣味英语游戏</span>
             </h2>
-            <p class="t-text" 
-               data-en="New vocabulary from the last 10 days of work!" 
-               data-cn="过去10天工作中的新词汇！">
-               New vocabulary from the last 10 days of work!
-            </p>
-            <div id="score-board" style="font-size: 1.2rem; margin-bottom: 20px; color: #86868b;">Score: 0</div>
-            
+            <div id="score-board">Score: 0</div>
             <div id="quiz-area">
-                <div id="question" style="font-size: 1.4rem; font-weight: 700; margin-bottom: 20px;">Loading...</div>
+                <h3 id="question" style="background:none; transform:none; font-size:1.5rem;">Loading...</h3>
                 <div id="options"></div>
             </div>
-            
-            <button id="reset-btn" class="nav-btn t-text" 
-                data-en="Reset Quiz" 
-                data-cn="重置测验"
-                onclick="startQuiz()" style="margin-top:20px; background:#f5f5f7;">
-                Reset Quiz
-            </button>
+            <button class="nav-btn" style="color: black; border: 2px solid black; margin-top: 10px;" onclick="startQuiz()">Restart Game</button>
         </div>
 
-        <footer style="text-align: center; margin-top: 50px; color: #86868b; font-size: 0.8rem;">
-            Designed by Raghav Sharma | Liquid Engine 3.1
+        <footer style="text-align: center; margin-top: 50px; font-family: 'Patrick Hand', cursive; color: #888;">
+            PaperCraft OS v1.0 | Made by Raghav
         </footer>
 
     </div>
@@ -463,94 +596,71 @@
     <script>
         let isChinese = false;
 
-        // --- 1. SCROLL FUNCTION ---
         function scrollToSection(id) {
-            const element = document.getElementById(id);
-            const offset = 80; // height of nav bar
-            const bodyRect = document.body.getBoundingClientRect().top;
-            const elementRect = element.getBoundingClientRect().top;
-            const elementPosition = elementRect - bodyRect;
-            const offsetPosition = elementPosition - offset;
-
-            window.scrollTo({
-                top: offsetPosition,
-                behavior: "smooth"
-            });
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
-        // --- 2. TRANSLATION FUNCTION (SWAP TEXT) ---
         function toggleLanguage() {
             isChinese = !isChinese;
-            
-            // Swap all basic text elements
-            const translatableElements = document.querySelectorAll('.t-text');
-            translatableElements.forEach(el => {
-                if (isChinese) {
-                    el.innerText = el.dataset.cn;
-                } else {
-                    el.innerText = el.dataset.en;
-                }
-            });
-
-            // Re-render Quiz Current Question to match language
-            loadQuestion(); 
+            document.body.classList.toggle('chinese-mode');
+            loadQuestion();
         }
 
-        // --- 3. QUIZ LOGIC (BILINGUAL) ---
+        // --- NEW FUN ENGLISH GAME DATA ---
         const questions = [
             {
-                word: "Refinement", wordCn: "细化",
-                correct: "The process of removing impurities or unwanted elements; polishing.",
-                correctCn: "去除杂质或不需要元素的过程；抛光。",
+                category: "Idiom / 成语",
+                question: "How do you say '加油' (Jiāyóu) in natural English?",
+                questionCn: "用地道的英语怎么说“加油”？",
+                correct: "Keep it up! / You can do it!",
                 options: [
-                    { en: "The process of removing impurities or unwanted elements; polishing.", cn: "去除杂质或不需要元素的过程；抛光。", correct: true },
-                    { en: "Creating something completely new from scratch.", cn: "从零开始创造全新的东西。", correct: false },
-                    { en: "Deleting all files and starting over.", cn: "删除所有文件并重新开始。", correct: false },
-                    { en: "Sending an email to the client.", cn: "给客户发送电子邮件。", correct: false }
+                    { txt: "Add Oil! (Chinglish)", correct: false },
+                    { txt: "Keep it up! / You can do it!", correct: true },
+                    { txt: "Add Gas!", correct: false }
                 ]
             },
             {
-                word: "Iteration", wordCn: "迭代",
-                correct: "A new version of a computer program or design.",
-                correctCn: "计算机程序或设计的新版本。",
+                category: "Office Slang / 职场俚语",
+                question: "What is the English version of '摸鱼' (Touching Fish)?",
+                questionCn: "“摸鱼”用英语怎么说？",
+                correct: "Slacking off / Loafing",
                 options: [
-                    { en: "A new version of a computer program or design.", cn: "计算机程序或设计的新版本。", correct: true },
-                    { en: "Feeling annoyed at a coworker.", cn: "对同事感到恼火。", correct: false },
-                    { en: "Eating lunch very quickly.", cn: "吃午饭很快。", correct: false },
-                    { en: "A type of computer screen technology.", cn: "一种电脑屏幕技术。", correct: false }
+                    { txt: "Touching Fish (Literal)", correct: false },
+                    { txt: "Slacking off / Loafing", correct: true },
+                    { txt: "Fishing in the office", correct: false }
                 ]
             },
             {
-                word: "Variation", wordCn: "变体",
-                correct: "A change or difference in condition, amount, or level.",
-                correctCn: "条件、数量或水平的变化或差异。",
+                category: "Fun Fact / 冷知识",
+                question: "Did you know? The phrase 'Long time no see' actually comes from...",
+                questionCn: "你知道吗？短语“Long time no see”其实来自……",
+                correct: "Chinese (好久不见)",
                 options: [
-                    { en: "A change or difference in condition, amount, or level.", cn: "条件、数量或水平的变化或差异。", correct: true },
-                    { en: "A very strict rule in the office.", cn: "办公室里非常严格的规定。", correct: false },
-                    { en: "Using the exact same image twice.", cn: "完全相同的图像使用两次。", correct: false },
-                    { en: "A specific type of video file.", cn: "特定类型的视频文件。", correct: false }
+                    { txt: "Old British English", correct: false },
+                    { txt: "Chinese (好久不见 - Pidgin English)", correct: true },
+                    { txt: "French Grammar", correct: false }
                 ]
             },
             {
-                word: "Composition", wordCn: "构图",
-                correct: "The artistic arrangement of the parts of a picture.",
-                correctCn: "图片各部分的艺术安排。",
+                category: "Idiom / 成语",
+                question: "How do you explain '马马虎虎' (Horse Horse Tiger Tiger) to an American?",
+                questionCn: "怎么向美国人解释“马马虎虎”？",
+                correct: "So-so / Average",
                 options: [
-                    { en: "The artistic arrangement of the parts of a picture.", cn: "图片各部分的艺术安排。", correct: true },
-                    { en: "Writing a letter to a friend.", cn: "给朋友写信。", correct: false },
-                    { en: "The battery life of a laptop.", cn: "笔记本电脑的电池寿命。", correct: false },
-                    { en: "A meeting in the conference room.", cn: "会议室里的会议。", correct: false }
+                    { txt: "Dangerous Zoo", correct: false },
+                    { txt: "So-so / Average", correct: true },
+                    { txt: "Very fast and strong", correct: false }
                 ]
             },
             {
-                word: "Prolific", wordCn: "多产",
-                correct: "Producing a large amount of work.",
-                correctCn: "产生大量的工作。",
+                category: "Business / 商业",
+                question: "In marketing, what is a 'Blue Ocean' (蓝海)?",
+                questionCn: "在市场营销中，什么是“蓝海”？",
+                correct: "A new market with no competition",
                 options: [
-                    { en: "Producing a large amount of work.", cn: "产生大量的工作。", correct: true },
-                    { en: "Being very lazy on the weekend.", cn: "周末非常懒惰。", correct: false },
-                    { en: "A professional graphic designer.", cn: "专业的平面设计师。", correct: false },
-                    { en: "Feeling tired after lunch.", cn: "午饭后感到疲倦。", correct: false }
+                    { txt: "A new market with no competition", correct: true },
+                    { txt: "A sad business meeting", correct: false },
+                    { txt: "Selling water products", correct: false }
                 ]
             }
         ];
@@ -559,66 +669,54 @@
         let score = 0;
 
         function startQuiz() {
-            currentQ = 0;
-            score = 0;
-            document.getElementById('score-board').innerText = isChinese ? "得分: 0" : "Score: 0";
+            currentQ = 0; score = 0;
+            document.getElementById('score-board').innerText = "Score: 0";
             loadQuestion();
         }
 
         function loadQuestion() {
+            const qTitle = document.getElementById('question');
+            const optDiv = document.getElementById('options');
+
             if (currentQ >= questions.length) {
-                document.getElementById('question').innerHTML = isChinese ? "🎉 测验完成! <br> 你是词汇大师！" : "🎉 QUIZ COMPLETE! <br> You are a vocabulary master!";
-                document.getElementById('options').innerHTML = "";
+                qTitle.innerHTML = isChinese 
+                    ? "🎉 游戏结束！你的英语太棒了！" 
+                    : "🎉 GAME OVER! Your English is Awesome!";
+                optDiv.innerHTML = "";
                 return;
             }
 
             const q = questions[currentQ];
-            const wordDisplay = isChinese ? `${q.word} (${q.wordCn})` : q.word;
-            const defText = isChinese ? "定义：" : "Definition of:";
+            const catDisplay = `<div style='font-size:0.9rem; color:#888; margin-bottom:5px;'>${q.category}</div>`;
+            const qText = isChinese ? q.questionCn : q.question;
+            qTitle.innerHTML = catDisplay + qText;
             
-            document.getElementById('question').innerHTML = `${defText} <span style="color:#0071e3">${wordDisplay}</span>`;
-            
-            const optionsDiv = document.getElementById('options');
-            optionsDiv.innerHTML = "";
-
-            // Clone and Shuffle options
+            optDiv.innerHTML = "";
             let shuffled = [...q.options].sort(() => Math.random() - 0.5);
 
             shuffled.forEach(opt => {
                 const btn = document.createElement('button');
                 btn.className = 'option-btn';
-                btn.innerText = isChinese ? opt.cn : opt.en;
+                btn.innerText = opt.txt;
                 btn.onclick = () => checkAnswer(btn, opt.correct);
-                optionsDiv.appendChild(btn);
+                optDiv.appendChild(btn);
             });
         }
 
         function checkAnswer(btn, isCorrect) {
             const btns = document.querySelectorAll('.option-btn');
             btns.forEach(b => b.disabled = true);
-
             if (isCorrect) {
                 btn.classList.add('correct');
-                score += 10;
-                document.getElementById('score-board').innerText = isChinese ? `得分: ${score}` : `Score: ${score}`;
+                score += 100;
+                document.getElementById('score-board').innerText = isChinese ? "得分: " + score : "Score: " + score;
             } else {
                 btn.classList.add('wrong');
-                // Auto highlight correct one
-                btns.forEach((b, index) => {
-                     // Since we shuffled, we can't easily find the correct button by text safely if language swapped. 
-                     // But visual feedback on red is usually enough.
-                });
             }
-
-            setTimeout(() => {
-                currentQ++;
-                loadQuestion();
-            }, 1500);
+            setTimeout(() => { currentQ++; loadQuestion(); }, 1500);
         }
 
-        // Initialize Quiz
         startQuiz();
-
     </script>
 </body>
 </html>
