@@ -3,249 +3,284 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Raghav's Creative Log</title>
-    <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <title>Raghav's Creative Journey - Lunar Edition</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Noto+Sans+SC:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --paper-bg: #fdfbf7;
-            --ink-color: #2b2b2b;
-            --accent-yellow: #ffeaa7;
-            --accent-pink: #ff7675;
-            --accent-blue: #74b9ff;
-            --accent-green: #55efc4;
-            --shadow-paper: 4px 4px 0px rgba(0,0,0,0.1);
+            --cny-red-dark: #8b0000;
+            --cny-red-bright: #d32f2f;
+            --cny-gold: #ffd700;
+            --cny-gold-dark: #daa520;
+            --paper-bg: rgba(40, 10, 10, 0.85);
+            --text-primary: #fff8e7;
+            --text-secondary: #ffb7b7;
+            --accent-glow: 0 0 15px rgba(255, 215, 0, 0.5);
+            --shadow-card: 0 10px 30px rgba(0,0,0,0.5), inset 0 0 20px rgba(139, 0, 0, 0.3);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background-color: #f0f2f5;
-            background-image: 
-                linear-gradient(#e5e5f7 1px, transparent 1px),
-                linear-gradient(90deg, #e5e5f7 1px, transparent 1px);
-            background-size: 20px 20px; /* Grid Paper Effect */
-            color: var(--ink-color);
-            font-family: 'Inter', sans-serif;
+            background-color: #1a0505;
+            color: var(--text-primary);
+            font-family: 'Inter', 'Noto Sans SC', sans-serif;
             line-height: 1.6;
             overflow-x: hidden;
             padding-bottom: 100px;
         }
 
-        /* --- FLOATING ANIMALS (BACKGROUND) --- */
-        .floating-stickers {
+        /* --- ANIMATED LUNAR BACKGROUND --- */
+        .lunar-bg {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
-            z-index: -1;
-            pointer-events: none;
+            z-index: -2;
+            background: linear-gradient(to bottom, #3e0000, #1a0505);
             overflow: hidden;
         }
-        .sticker {
-            position: absolute;
-            font-size: 3rem;
-            opacity: 0.6;
-            filter: drop-shadow(2px 2px 0 rgba(0,0,0,0.1));
-            animation: floatAround 25s infinite linear;
-        }
-        @keyframes floatAround {
-            0% { transform: translate(0, 0) rotate(0deg); }
-            25% { transform: translate(100px, 50px) rotate(10deg); }
-            50% { transform: translate(0, 100px) rotate(-10deg); }
-            75% { transform: translate(-100px, 50px) rotate(5deg); }
-            100% { transform: translate(0, 0) rotate(0deg); }
+
+        .lunar-pattern {
+            position: absolute; top:0; left:0; width:100%; height:100%;
+            background-image: url('https://www.transparenttextures.com/patterns/oriental-tiles.png');
+            opacity: 0.2;
         }
 
-        /* --- NAVIGATION (MARKER STYLE) --- */
+        /* Floating Lanterns */
+        .lantern {
+            position: absolute;
+            width: 60px; height: 80px;
+            background: radial-gradient(circle, var(--cny-red-bright), var(--cny-red-dark));
+            border-radius: 30px;
+            box-shadow: 0 0 20px var(--cny-red-bright), 0 5px 15px #000;
+            animation: floatUp linear infinite;
+            opacity: 0.7;
+        }
+        .lantern::before { content: ''; position: absolute; top: -5px; left: 25px; width: 10px; height: 5px; background: var(--cny-gold); }
+        .lantern::after { content: '福'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: var(--cny-gold); font-family: 'Noto Sans SC'; font-weight: bold; font-size: 24px; }
+
+        @keyframes floatUp {
+            0% { transform: translateY(110vh) rotate(0deg) scale(0.8); opacity: 0; }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.8; }
+            100% { transform: translateY(-10vh) rotate(10deg) scale(1); opacity: 0; }
+        }
+
+        /* Galloping Horses */
+        .horse-bg {
+            position: absolute;
+            bottom: 10%;
+            left: -20%;
+            font-size: 8rem;
+            opacity: 0.1;
+            color: var(--cny-gold);
+            animation: gallop 25s linear infinite;
+            filter: blur(2px);
+        }
+        @keyframes gallop {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(130vw); }
+        }
+
+        /* --- NAVIGATION (GOLDEN SCROLL STYLE) --- */
         .nav-bar {
             position: fixed;
             top: 20px; left: 50%; transform: translateX(-50%);
-            background: var(--ink-color);
-            padding: 10px 25px;
-            border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
-            display: flex; gap: 15px;
+            background: linear-gradient(to right, var(--cny-red-dark), #5a0000, var(--cny-red-dark));
+            padding: 12px 30px;
+            border-radius: 50px;
+            display: flex; gap: 20px;
             z-index: 1000;
-            box-shadow: 5px 5px 0px rgba(0,0,0,0.2);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.6);
+            border: 2px solid var(--cny-gold-dark);
             flex-wrap: wrap;
             justify-content: center;
         }
 
         .nav-btn {
             background: transparent; border: none;
-            color: white; font-family: 'Patrick Hand', cursive;
-            font-size: 1.1rem; cursor: pointer;
-            padding: 5px 10px; transition: transform 0.2s;
+            color: var(--cny-gold); font-family: 'Cinzel', serif;
+            font-size: 1rem; cursor: pointer; font-weight: bold;
+            padding: 8px 15px; transition: all 0.3s;
+            position: relative;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
         }
-        .nav-btn:hover { color: var(--accent-yellow); transform: scale(1.1) rotate(-2deg); }
-        .translate-btn { color: var(--accent-green); font-weight: bold; }
+        .nav-btn::after {
+            content: ''; position: absolute; bottom: 0; left: 50%; width: 0; height: 2px; background: var(--cny-gold); transition:all 0.3s;
+        }
+        .nav-btn:hover { color: #fff; transform: translateY(-2px); }
+        .nav-btn:hover::after { width: 100%; left: 0; }
+        .translate-btn { color: #fff; background: rgba(218, 165, 32, 0.3); border-radius: 20px; }
 
         /* --- CONTAINER --- */
         .container {
-            max-width: 1000px;
+            max-width: 1100px;
             margin: 0 auto;
-            padding: 120px 20px 50px 20px;
+            padding: 140px 20px 50px 20px;
         }
 
-        /* --- TYPOGRAPHY (MARKER STYLE) --- */
-        h1, h2 { font-family: 'Patrick Hand', cursive; }
+        /* --- TYPOGRAPHY --- */
+        h1, h2 { font-family: 'Cinzel', 'Noto Sans SC', serif; color: var(--cny-gold); }
         
         h1 {
-            font-size: 4rem; text-align: center;
-            transform: rotate(-2deg);
-            text-shadow: 3px 3px 0px var(--accent-blue);
+            font-size: 3.8rem; text-align: center;
             margin-bottom: 0.5rem;
-            line-height: 1;
+            text-shadow: 2px 2px 10px rgba(218, 165, 32, 0.5);
         }
         
         h3 {
-            text-align: center; font-size: 1.1rem; color: #555;
-            margin-bottom: 4rem; font-weight: 600;
-            background: var(--accent-yellow);
-            display: inline-block; padding: 2px 10px;
-            transform: rotate(1deg);
-            position: relative; left: 50%; translate: -50%;
-            border-radius: 4px;
+            text-align: center; font-size: 1.2rem; color: var(--text-secondary);
+            margin-bottom: 5rem; font-weight: 400;
+            letter-spacing: 2px;
         }
 
-        /* --- PAPER CARDS --- */
-        .paper-card {
+        /* --- LUNAR CARDS --- */
+        .lunar-card {
             background: var(--paper-bg);
-            padding: 2.5rem;
-            margin-bottom: 3rem;
+            padding: 3rem;
+            margin-bottom: 4rem;
             position: relative;
-            /* The Sketchy Border CSS Trick */
-            border: 2px solid var(--ink-color);
-            border-radius: 2px 255px 3px 25px / 255px 5px 225px 5px;
-            box-shadow: var(--shadow-paper);
+            border: 2px solid var(--cny-gold-dark);
+            border-radius: 16px;
+            box-shadow: var(--shadow-card);
+            backdrop-filter: blur(10px);
+            overflow: hidden;
             transition: transform 0.3s;
         }
 
-        .paper-card:hover { transform: translateY(-3px) rotate(0.2deg); }
+        .lunar-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(218, 165, 32, 0.2); }
 
-        /* Tape Effect */
-        .tape {
-            position: absolute;
-            top: -15px; left: 50%; transform: translateX(-50%) rotate(-2deg);
-            width: 100px; height: 30px;
-            background: rgba(255,255,255,0.6);
-            border: 1px solid rgba(0,0,0,0.1);
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        /* Corner Ornaments */
+        .lunar-card::before, .lunar-card::after {
+            content: ''; position: absolute; width: 50px; height: 50px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='%23daa520'%3E%3Cpath d='M10,10 L90,10 L90,90 L10,90 Z M20,20 L20,80 L80,80 L80,20 Z' /%3E%3C/svg%3E"); /* Simple gold frame SVG placeholder */
+            background-size: contain; opacity: 0.5;
         }
+        .lunar-card::before { top: 10px; left: 10px; }
+        .lunar-card::after { bottom: 10px; right: 10px; transform: rotate(180deg); }
 
         .date-badge {
             display: inline-block;
-            background: var(--ink-color);
-            color: white;
-            font-family: 'Patrick Hand', cursive;
-            padding: 4px 12px;
-            border-radius: 12px;
-            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--cny-red-dark), var(--cny-red-bright));
+            color: var(--cny-gold);
+            font-family: 'Cinzel', serif;
+            padding: 6px 18px;
+            border-radius: 50px;
+            margin-bottom: 1.5rem;
             font-size: 1.1rem;
-            transform: rotate(-1deg);
+            border: 1px solid var(--cny-gold);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
 
         /* --- SECTION DIVIDERS --- */
         .section-header {
-            margin: 5rem 0 3rem 0;
-            display: flex; align-items: center; gap: 15px;
-            border-bottom: 3px dashed var(--ink-color);
-            padding-bottom: 10px;
+            margin: 6rem 0 3rem 0;
+            display: flex; align-items: center; justify-content: center; gap: 20px;
+            position: relative;
         }
-        .section-header h2 { font-size: 2.5rem; margin: 0; }
-        .section-icon { font-size: 3rem; animation: bounce 2s infinite; }
-
-        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        .section-header::before, .section-header::after {
+            content: ''; height: 2px; flex-grow: 1; background: linear-gradient(to right, transparent, var(--cny-gold), transparent);
+        }
+        .section-header h2 { font-size: 2.8rem; margin: 0; text-shadow: 2px 2px 5px #000; }
+        .section-icon { font-size: 3rem; filter: drop-shadow(0 0 10px var(--cny-gold)); }
 
         /* --- MEDIA GRID (UPDATED) --- */
         .image-grid {
             display: grid;
-            /* Bigger images, natural size */
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-            margin-top: 1.5rem;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+            margin-top: 2rem;
         }
 
         .media-box {
-            background: white;
-            padding: 10px;
-            border: 1px solid #ddd;
-            box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
-            transition: all 0.3s;
+            background: #000;
+            padding: 8px;
+            border: 2px solid var(--cny-gold-dark);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            transition: all 0.4s;
+            position: relative;
+            border-radius: 8px;
         }
 
-        .media-box:hover { transform: scale(1.02) rotate(1deg); z-index: 10; border-color: var(--ink-color); }
+        .media-box:hover { transform: scale(1.03); z-index: 10; border-color: var(--cny-red-bright); box-shadow: 0 0 20px var(--cny-red-bright); }
 
         .media-box img, .media-box video {
-            width: 100%;
-            height: auto; /* Keeps natural aspect ratio */
-            display: block;
-            border-radius: 2px;
+            width: 100%; height: auto; display: block; border-radius: 4px;
         }
         
         .media-label {
-            font-family: 'Patrick Hand', cursive;
-            font-size: 0.9rem; color: #666;
-            margin-top: 5px; text-align: right;
+            font-family: 'Inter', sans-serif; font-size: 0.85rem; color: var(--cny-gold);
+            margin-top: 8px; text-align: right; opacity: 0.8;
         }
 
-        /* --- TRANSLATION HIGHLIGHTS --- */
-        .t-text span.cn { display: none; color: #666; font-size: 0.95em; display: block; margin-top: 8px; font-weight: normal; border-top: 1px dotted #ccc; padding-top: 5px; }
+        /* Special class for landscape images */
+        .full-width-media {
+            grid-column: 1 / -1; /* Span all columns */
+            aspect-ratio: 16 / 9;
+        }
+        .full-width-media img {
+            height: 100%; object-fit: cover;
+        }
+
+        /* --- TRANSLATION & VOCAB --- */
+        .t-text span.cn { display: none; color: var(--text-secondary); font-size: 1em; margin-top: 10px; padding-top: 10px; border-top: 1px dashed rgba(218, 165, 32, 0.3); font-family: 'Noto Sans SC', sans-serif; }
         body.chinese-mode .t-text span.cn { display: block; }
         
-        .vocab {
-            background: linear-gradient(120deg, var(--accent-yellow) 0%, var(--accent-yellow) 100%);
-            background-repeat: no-repeat;
-            background-size: 100% 40%;
-            background-position: 0 88%;
-            cursor: help;
-            font-weight: 700;
-        }
+        .vocab { color: var(--cny-gold); font-weight: 700; border-bottom: 1px dotted var(--cny-gold); }
 
-        /* --- GAME SECTION --- */
-        .quiz-container { 
-            text-align: center; background: #fff; padding: 3rem; 
-            border: 3px solid var(--ink-color); border-radius: 20px;
-            position: relative;
-        }
-        .option-btn {
-            background: white; border: 2px solid var(--ink-color);
-            padding: 1rem; border-radius: 10px; cursor: pointer;
-            font-family: 'Inter', sans-serif; font-weight: 600;
-            margin: 8px 0; width: 100%; text-align: left;
-            transition: 0.2s; box-shadow: 3px 3px 0 var(--ink-color);
-        }
-        .option-btn:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--ink-color); }
-        .option-btn:active { transform: translate(0, 0); box-shadow: 0 0 0; }
-        
-        .option-btn.correct { background: var(--accent-green); }
-        .option-btn.wrong { background: var(--accent-pink); animation: shake 0.4s; }
-
-        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
-
+        /* --- HUMOUR STAMP --- */
         .humor-stamp {
             position: absolute; bottom: 30px; right: 30px;
-            font-family: 'Patrick Hand', cursive;
-            color: #d63031; border: 4px solid #d63031;
-            padding: 10px 20px; font-size: 1.8rem; font-weight: bold;
+            font-family: 'Cinzel', serif; color: var(--cny-red-bright);
+            border: 4px solid var(--cny-red-bright);
+            padding: 10px 20px; font-size: 1.5rem; font-weight: bold;
             transform: rotate(-15deg); opacity: 0.9;
-            background: rgba(255,255,255,0.8);
-            z-index: 20;
+            background: rgba(0,0,0,0.8); z-index: 20;
+            box-shadow: 0 0 15px var(--cny-red-bright);
         }
+        
+        /* --- GAME CONTAINER --- */
+        #game-container {
+            width: 100%; height: 500px;
+            background: rgba(20, 0, 0, 0.9);
+            border: 4px solid var(--cny-gold);
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            cursor: none; /* Hide cursor for game */
+            box-shadow: inset 0 0 50px rgba(139, 0, 0, 0.5);
+            margin-top: 5rem;
+        }
+        #game-canvas { display: block; }
+        #game-ui {
+            position: absolute; top: 20px; left: 20px;
+            color: var(--cny-gold); font-family: 'Cinzel', serif; font-size: 1.5rem; z-index: 10;
+            text-shadow: 2px 2px 4px #000;
+        }
+        #start-screen {
+            position: absolute; top:0; left:0; width:100%; height:100%;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            background: rgba(0,0,0,0.8); color: var(--cny-gold); z-index: 20;
+        }
+        #start-btn {
+            padding: 15px 40px; font-size: 1.5rem; background: var(--cny-red-dark); color: var(--cny-gold);
+            border: 2px solid var(--cny-gold); border-radius: 50px; cursor: pointer;
+            font-family: 'Cinzel', serif; margin-top: 20px; transition: 0.3s;
+        }
+        #start-btn:hover { background: var(--cny-red-bright); box-shadow: 0 0 20px var(--cny-gold); }
 
     </style>
 </head>
 <body>
 
-    <div class="floating-stickers">
-        <div class="sticker" style="top: 10%; left: 10%;">🦊</div>
-        <div class="sticker" style="top: 20%; right: 15%; animation-delay: 2s;">🐸</div>
-        <div class="sticker" style="top: 60%; left: 5%; animation-delay: 5s;">🐼</div>
-        <div class="sticker" style="top: 80%; right: 10%; animation-delay: 1s;">🐙</div>
-        <div class="sticker" style="top: 40%; left: 50%; animation-delay: 3s;">🚀</div>
+    <div class="lunar-bg">
+        <div class="lunar-pattern"></div>
+        <div id="lantern-container"></div>
+        <div class="horse-bg" style="top: 60%; animation-delay: 0s;">🐎</div>
+        <div class="horse-bg" style="top: 75%; animation-delay: -12s; opacity: 0.05; font-size: 6rem;">🐎</div>
     </div>
 
     <div class="nav-bar">
-        <button class="nav-btn" onclick="scrollToSection('week1')">Week 1 (Jan 12-19)</button>
-        <button class="nav-btn" onclick="scrollToSection('week2')">Week 2 (Jan 20-30)</button>
-        <button class="nav-btn" onclick="scrollToSection('week3')">Week 3 (Feb 2-6)</button>
+        <button class="nav-btn" onclick="scrollToSection('week1')">Weeks 1-3 (Jan 12 - Feb 6)</button>
+        <button class="nav-btn" onclick="scrollToSection('week4')">Weeks 4-6 (Feb 9 - Feb 25) ✨</button>
         <button class="nav-btn translate-btn" onclick="toggleLanguage()">文 / EN</button>
     </div>
 
@@ -253,23 +288,22 @@
         
         <header>
             <h1 class="t-text">
-                Creative Log
-                <span class="cn">创意日志</span>
+                Creative Journey 2026
+                <span class="cn">创意之旅 2026</span>
             </h1>
             <h3 class="t-text">
-                Raghav Sharma | Graphic Intern
-                <span class="cn">Raghav Sharma | 平面设计实习生</span>
+                Raghav Sharma | Graphic Intern | Lunar Edition
+                <span class="cn">Raghav Sharma | 平面设计实习生 | 新春特别版</span>
             </h3>
         </header>
 
         <div id="week1">
             <div class="section-header">
-                <span class="section-icon">🌱</span>
+                <span class="section-icon">🐲</span>
                 <h2 class="t-text">Phase 1: The Foundation <span class="cn">第一阶段：基础奠定</span></h2>
             </div>
 
-            <div class="paper-card">
-                <div class="tape"></div>
+            <div class="lunar-card">
                 <span class="date-badge">Jan 12</span>
                 <h2 class="t-text">Strategic Genesis <span class="cn">战略起源</span></h2>
                 <p class="t-text">
@@ -283,8 +317,7 @@
                 </div>
             </div>
 
-            <div class="paper-card">
-                <div class="tape"></div>
+            <div class="lunar-card">
                 <span class="date-badge">Jan 13</span>
                 <h2 class="t-text">Concept Incubation <span class="cn">概念孵化</span></h2>
                 <p class="t-text">
@@ -298,8 +331,7 @@
                 </div>
             </div>
 
-            <div class="paper-card">
-                <div class="tape"></div>
+            <div class="lunar-card">
                 <span class="date-badge">Jan 14 (WFH)</span>
                 <h2 class="t-text">Social Visuals <span class="cn">社交视觉</span></h2>
                 <p class="t-text">
@@ -313,8 +345,7 @@
                 </div>
             </div>
 
-            <div class="paper-card">
-                <div class="tape"></div>
+            <div class="lunar-card">
                 <span class="date-badge">Jan 15</span>
                 <h2 class="t-text">Cultural Resonance <span class="cn">文化共鸣</span></h2>
                 <p class="t-text">
@@ -328,8 +359,7 @@
                 </div>
             </div>
 
-            <div class="paper-card" style="border-color: var(--accent-blue);">
-                <div class="tape"></div>
+            <div class="lunar-card">
                 <span class="date-badge">Jan 16-18 (Weekend Sprint)</span>
                 <h2 class="t-text">Motion & Assets <span class="cn">动态与资产</span></h2>
                 <p class="t-text">
@@ -349,8 +379,7 @@
                 </div>
             </div>
 
-            <div class="paper-card">
-                <div class="tape"></div>
+            <div class="lunar-card">
                 <span class="date-badge">Jan 19</span>
                 <h2 class="t-text">Packaging Polish <span class="cn">包装打磨</span></h2>
                 <p class="t-text">
@@ -361,16 +390,13 @@
                     <div class="media-box"><img src="22.png"><div class="media-label">22.png</div></div>
                 </div>
             </div>
-        </div>
-
-        <div id="week2">
+        
             <div class="section-header">
                 <span class="section-icon">🚀</span>
                 <h2 class="t-text">Phase 2: Scale <span class="cn">第二阶段：规模化</span></h2>
             </div>
 
-            <div class="paper-card">
-                <div class="tape"></div>
+            <div class="lunar-card">
                 <span class="date-badge">Jan 20-21</span>
                 <h2 class="t-text">Storyboard & SKU <span class="cn">故事板与SKU</span></h2>
                 <p class="t-text">
@@ -384,8 +410,7 @@
                 </div>
             </div>
 
-            <div class="paper-card">
-                <div class="tape"></div>
+            <div class="lunar-card">
                 <span class="date-badge">Jan 22-23</span>
                 <h2 class="t-text">Massive Iteration <span class="cn">大规模迭代</span></h2>
                 <p class="t-text">
@@ -414,8 +439,7 @@
                 </div>
             </div>
 
-            <div class="paper-card" style="border-color: var(--accent-pink);">
-                <div class="tape"></div>
+            <div class="lunar-card">
                 <span class="date-badge">Jan 24-26 (Republic Day)</span>
                 <h2 class="t-text">Festive Campaign <span class="cn">节日营销</span></h2>
                 <p class="t-text">
@@ -432,8 +456,7 @@
                 </div>
             </div>
 
-            <div class="paper-card">
-                <div class="tape"></div>
+            <div class="lunar-card">
                 <span class="date-badge">Jan 27-28</span>
                 <h2 class="t-text">Mini LED Expansion <span class="cn">Mini LED 扩展</span></h2>
                 <p class="t-text">
@@ -455,8 +478,7 @@
                 </div>
             </div>
 
-            <div class="paper-card" style="background: #e1f5fe;">
-                <div class="tape"></div>
+            <div class="lunar-card">
                 <span class="date-badge">Jan 29</span>
                 <h2 class="t-text">Leave (Inspiration) <span class="cn">休假（灵感）</span></h2>
                 <p class="t-text">
@@ -465,8 +487,7 @@
                 </p>
             </div>
 
-            <div class="paper-card">
-                <div class="tape"></div>
+            <div class="lunar-card">
                 <span class="date-badge">Jan 30</span>
                 <h2 class="t-text">Video Polish <span class="cn">视频完善</span></h2>
                 <p class="t-text">
@@ -477,45 +498,37 @@
                     <div class="media-box"><video src="60.mp4" controls muted playsinline></video><div class="media-label">60.mp4</div></div>
                 </div>
             </div>
-        </div>
-
-        <div id="week3">
+        
             <div class="section-header">
                 <span class="section-icon">✨</span>
                 <h2 class="t-text">Phase 3: Refinement <span class="cn">第三阶段：精细化</span></h2>
             </div>
 
-            <div class="paper-card" style="border-color: var(--accent-yellow);">
-                <div class="tape"></div>
+            <div class="lunar-card">
                 <span class="date-badge">Feb 2</span>
                 <h2 class="t-text">Cross-Brand Editing <span class="cn">跨品牌编辑</span></h2>
                 <p class="t-text">
-                    Edited promo video for <strong>PHILIPS PFT6290/94</strong> and drafted the story breakdown for <strong>Xiaomi FantastiQ LED</strong>.
-                    <span class="cn">编辑了 PHILIPS PFT6290/94 的宣传视频，并起草了小米 FantastiQ LED 的故事大纲。</span>
+                    Edited promo video for Philips and drafted story for Xiaomi. Enhanced Coocaa Mini LED video.
+                    <span class="cn">编辑了飞利浦宣传视频并起草了小米的故事。增强了 Coocaa Mini LED 视频。</span>
                 </p>
-                <p class="t-text">
-                    Also worked on <span class="vocab">enhancement</span> for the Coocaa Mini LED video.
-                    <span class="cn">还致力于 Coocaa Mini LED 视频的增强工作。</span>
-                </p>
-                <p style="font-size: 0.9rem; color: #666; margin-top: 5px;">
+                <p style="font-size: 0.9rem; color: var(--cny-gold); margin-top: 5px;">
                     <strong>Output:</strong> 17 Frame Edits, 9 Video Generations, 10 Post-Compositing.
                 </p>
                 <div class="image-grid">
-                    <div class="media-box"><img src="61.png"><div class="media-label">61.png</div></div>
+                    <div class="media-box"><img src="61.png"><div class="media-label">61.png (Edit)</div></div>
                     <div class="media-box"><img src="62.png"><div class="media-label">62.png</div></div>
                     <div class="media-box"><video src="63.mp4" controls muted playsinline></video><div class="media-label">63.mp4</div></div>
                 </div>
             </div>
 
-            <div class="paper-card">
-                <div class="tape"></div>
+            <div class="lunar-card">
                 <span class="date-badge">Feb 3</span>
                 <h2 class="t-text">Compositing & Framing <span class="cn">合成与构图</span></h2>
                 <p class="t-text">
-                    Refined Amazon Store Cards and worked on Mini LED video framing. Focused on post-<span class="vocab">compositing</span> to blend layers seamlessly.
-                    <span class="cn">完善了亚马逊商店卡片并致力于 Mini LED 视频构图。专注于后期合成以无缝融合图层。</span>
+                    Refined Amazon Store Cards and worked on Mini LED video framing. Focused on post-<span class="vocab">compositing</span>.
+                    <span class="cn">完善了亚马逊商店卡片并致力于 Mini LED 视频构图。专注于后期合成。</span>
                 </p>
-                <p style="font-size: 0.9rem; color: #666; margin-top: 5px;">
+                <p style="font-size: 0.9rem; color: var(--cny-gold); margin-top: 5px;">
                     <strong>Output:</strong> 28 Image Frames, 5 Video Frames.
                 </p>
                 <div class="image-grid">
@@ -526,13 +539,12 @@
                 </div>
             </div>
 
-            <div class="paper-card">
-                <div class="tape"></div>
+            <div class="lunar-card">
                 <span class="date-badge">Feb 4</span>
                 <h2 class="t-text">Design Refinements <span class="cn">设计优化</span></h2>
                 <p class="t-text">
-                    Continued polishing the Coocaa Amazon Store cards. Implemented new design layouts based on feedback.
-                    <span class="cn">继续打磨 Coocaa 亚马逊商店卡片。根据反馈实施了新的设计布局。</span>
+                    Continued polishing the Coocaa Amazon Store cards based on feedback.
+                    <span class="cn">根据反馈继续打磨 Coocaa 亚马逊商店卡片。</span>
                 </p>
                 <div class="image-grid">
                     <div class="media-box"><img src="66.png"><div class="media-label">66.png</div></div>
@@ -540,25 +552,23 @@
                 </div>
             </div>
 
-            <div class="paper-card" style="background: #e1f5fe;">
-                <div class="tape"></div>
+            <div class="lunar-card">
                 <span class="date-badge">Feb 5</span>
-                <h2 class="t-text">International Competition <span class="cn">国际竞赛</span></h2>
+                <h2 class="t-text">Competition Leave <span class="cn">竞赛休假</span></h2>
                 <p class="t-text">
-                    Leave: Participated in the <strong>International Technovation Project</strong> competition at university. 🎓
-                    <span class="cn">休假：参加了大学的国际技术创新项目竞赛。🎓</span>
+                    Participated in the International Technovation Project competition. 🎓
+                    <span class="cn">参加了国际技术创新项目竞赛。🎓</span>
                 </p>
             </div>
 
-            <div class="paper-card">
-                <div class="tape"></div>
+            <div class="lunar-card">
                 <span class="date-badge">Feb 6</span>
                 <h2 class="t-text">Catalog & Video <span class="cn">目录与视频</span></h2>
                 <p class="t-text">
-                    Rendered the Coocaa Catalog cover image and finalized Mini LED video edits.
-                    <span class="cn">渲染了 Coocaa 目录封面图像并完成了 Mini LED 视频编辑。</span>
+                    Rendered Coocaa Catalog cover and finalized Mini LED video edits.
+                    <span class="cn">渲染了 Coocaa 目录封面并完成了 Mini LED 视频编辑。</span>
                 </p>
-                <p style="font-size: 0.9rem; color: #666; margin-top: 5px;">
+                <p style="font-size: 0.9rem; color: var(--cny-gold); margin-top: 5px;">
                     <strong>Output:</strong> 16 Design Variations, 24 Edits.
                 </p>
                 <div class="image-grid">
@@ -570,25 +580,216 @@
                     <div class="media-box"><img src="74.png"><div class="media-label">74.png</div></div>
                 </div>
             </div>
-
         </div>
 
-        <div class="quiz-container">
-            <div class="tape"></div>
-            <h2 class="t-text">
-                🧩 Ms. Wali's Fun English Game
-                <span class="cn">🧩 瓦利女士的趣味英语游戏</span>
-            </h2>
-            <div id="score-board">Score: 0</div>
-            <div id="quiz-area">
-                <h3 id="question" style="background:none; transform:none; font-size:1.5rem;">Loading...</h3>
-                <div id="options"></div>
+
+        <div id="week4">
+            <div class="section-header">
+                <span class="section-icon">🧧</span>
+                <h2 class="t-text">Phase 4: Festivals & Momentum <span class="cn">第四阶段：节日与动力</span></h2>
             </div>
-            <button class="nav-btn" style="color: black; border: 2px solid black; margin-top: 10px;" onclick="startQuiz()">Restart Game</button>
+
+            <div class="lunar-card" style="opacity: 0.7;">
+                <span class="date-badge" style="background: #333;">Feb 7-8 (Weekend)</span>
+                <h2 class="t-text">Weekly Reset <span class="cn">每周重置</span></h2>
+            </div>
+
+            <div class="lunar-card">
+                <span class="date-badge">Feb 9 (Monday)</span>
+                <h2 class="t-text">T20 & Valentines Kickoff <span class="cn">T20与情人节启动</span></h2>
+                <p class="t-text">
+                    Initiated creative production for Philips and Coocaa under major themes: T20 World Cup Men and Valentine's Day. Focus on high-energy sports visuals and romantic aesthetics.
+                    <span class="cn">启动了飞利浦和 Coocaa 的创意制作，主题为 T20 男子世界杯和情人节。专注于高能体育视觉效果和浪漫美学。</span>
+                </p>
+                <p style="font-size: 0.9rem; color: var(--cny-gold); margin-top: 5px;">
+                    <strong>Output:</strong> 28 Renderings, 9 Designs.
+                </p>
+                <div class="image-grid">
+                    <div class="media-box"><img src="75.png"><div class="media-label">75.png</div></div>
+                    <div class="media-box"><img src="76.png"><div class="media-label">76.png</div></div>
+                </div>
+            </div>
+
+            <div class="lunar-card">
+                <span class="date-badge">Feb 10 (Tuesday)</span>
+                <h2 class="t-text">Catalogue & Motion Love <span class="cn">目录与动态之爱</span></h2>
+                <p class="t-text">
+                    Executed PSD formatting for the Coocaa catalogue page refinement. Simultaneously worked on Coocaa Valentine's motion creatives.
+                    <span class="cn">执行了 Coocaa 目录页面细化的 PSD 格式化。同时致力于 Coocaa 情人节动态创意。</span>
+                </p>
+                <p style="font-size: 0.9rem; color: var(--cny-gold); margin-top: 5px;">
+                    <strong>Output:</strong> 8 Renderings, 2 Designs.
+                </p>
+                <div class="image-grid">
+                    <div class="media-box"><video src="77.mp4" controls muted playsinline></video><div class="media-label">77.mp4</div></div>
+                </div>
+            </div>
+
+            <div class="lunar-card">
+                <span class="date-badge">Feb 11 (Wednesday)</span>
+                <h2 class="t-text">Coocaa Mahashivratri <span class="cn">Coocaa 湿婆节</span></h2>
+                <p class="t-text">
+                    Developed festival creatives for Coocaa for Mahashivratri.
+                    <span class="cn">为 Coocaa 开发了湿婆节的节日创意。</span>
+                </p>
+                <p style="font-size: 0.9rem; color: var(--cny-gold); margin-top: 5px;">
+                    <strong>Output:</strong> 7 Renderings, 2 Designs.
+                </p>
+                <div class="image-grid">
+                    <div class="media-box"><video src="78.mp4" controls muted playsinline></video><div class="media-label">78.mp4</div></div>
+                </div>
+            </div>
+
+            <div class="lunar-card">
+                <span class="date-badge">Feb 12 (Thursday)</span>
+                <h2 class="t-text">Philips Dual-Festival <span class="cn">飞利浦双节</span></h2>
+                <p class="t-text">
+                    High volume output day covering both Mahashivratri and Valentine's creatives for Philips.
+                    <span class="cn">飞利浦湿婆节和情人节创意的高产量输出日。</span>
+                </p>
+                <p style="font-size: 0.9rem; color: var(--cny-gold); margin-top: 5px;">
+                    <strong>Output:</strong> 32 Renderings, 4 Designs, 2 Posters, 2 Videos (18 Frames).
+                </p>
+                <div class="image-grid">
+                    <div class="media-box"><video src="78.2.mp4" controls muted playsinline></video><div class="media-label">78.2.mp4</div></div>
+                    <div class="media-box"><video src="79.mp4" controls muted playsinline></video><div class="media-label">79.mp4</div></div>
+                </div>
+            </div>
+
+            <div class="lunar-card">
+                <span class="date-badge">Feb 13 (Friday)</span>
+                <h2 class="t-text">Ramadan Concepts <span class="cn">斋月概念</span></h2>
+                <p class="t-text">
+                    Finalized Coocaa Valentine's video (8 frames) and began concept breakdown for upcoming Ramadan creatives for Philips.
+                    <span class="cn">完成了 Coocaa 情人节视频（8帧），并开始为飞利浦即将到来的斋月创意进行概念分解。</span>
+                </p>
+                <div class="image-grid">
+                    <div class="media-box"><video src="80.mp4" controls muted playsinline></video><div class="media-label">80.mp4</div></div>
+                </div>
+            </div>
+
+            <div class="lunar-card" style="opacity: 0.7;">
+                <span class="date-badge" style="background: #333;">Feb 14-16</span>
+                <h2 class="t-text">Weekend & Leave <span class="cn">周末与休假</span></h2>
+                <p class="t-text">Feb 14-15 Weekend Off. Feb 16 Leave (Out of Town).</p>
+            </div>
+
+            <div class="lunar-card" style="border-color: var(--cny-red-bright);">
+                <span class="date-badge">Feb 17 (Tuesday)</span>
+                <h2 class="t-text">CNY & Multi-Project <span class="cn">春节与多项目</span></h2>
+                <p class="t-text">
+                    A diverse day: Ramadan creatives, MiniLED video refinement, and shooting/editing for the Chinese New Year celebration.
+                    <span class="cn">多样化的一天：斋月创意、MiniLED 视频细化，以及春节庆祝活动的拍摄/编辑。</span>
+                </p>
+                <p style="font-size: 0.9rem; color: var(--cny-gold); margin-top: 5px;">
+                    <strong>Output:</strong> 20 Renderings, 3 Video Designs, 12 Frames.
+                </p>
+                <div class="image-grid">
+                    <div class="media-box"><img src="81.png"><div class="media-label">81.png</div></div>
+                    <div class="media-box"><video src="82.mp4" controls muted playsinline></video><div class="media-label">82.mp4</div></div>
+                    <div class="media-box"><img src="cny1.jpeg"><div class="media-label">cny1.jpeg</div></div>
+                    <div class="media-box"><video src="cny2.mp4" controls muted playsinline></video><div class="media-label">cny2.mp4</div></div>
+                </div>
+            </div>
+
+            <div class="lunar-card" style="opacity: 0.7;">
+                <span class="date-badge" style="background: #333;">Feb 18 (Wednesday)</span>
+                <h2 class="t-text">Sick Leave <span class="cn">病假</span></h2>
+            </div>
+
+            <div class="lunar-card">
+                <span class="date-badge">Feb 19 (Thursday)</span>
+                <h2 class="t-text">Science Day Storyboard <span class="cn">科学日故事板</span></h2>
+                <p class="t-text">
+                    Storyboarding and asset collection for Philips National Science Day creative. High rendering volume for assets.
+                    <span class="cn">飞利浦国家科学日创意的故事板和资产收集。资产的高渲染量。</span>
+                </p>
+                <p style="font-size: 0.9rem; color: var(--cny-gold); margin-top: 5px;">
+                    <strong>Output:</strong> 38 Renderings, 26 Frames, 1 Design Video.
+                </p>
+                <div class="image-grid">
+                    <div class="media-box"><video src="83.mp4" controls muted playsinline></video><div class="media-label">83.mp4</div></div>
+                </div>
+            </div>
+
+            <div class="lunar-card">
+                <span class="date-badge">Feb 20 (Friday)</span>
+                <h2 class="t-text">Philips Refinement <span class="cn">飞利浦细化</span></h2>
+                <p class="t-text">
+                    Refinement of Philips creatives and work on Coocaa National Science Day assets.
+                    <span class="cn">飞利浦创意的细化以及 Coocaa 国家科学日资产的工作。</span>
+                </p>
+                <p style="font-size: 0.9rem; color: var(--cny-gold); margin-top: 5px;">
+                    <strong>Output:</strong> 12 Renderings, 8 Frames, 3 Designs.
+                </p>
+                <div class="image-grid">
+                    <div class="media-box"><video src="83.1.mp4" controls muted playsinline></video><div class="media-label">83.1.mp4</div></div>
+                    <div class="media-box"><img src="84.png"><div class="media-label">84.png</div></div>
+                </div>
+            </div>
+
+            <div class="lunar-card" style="opacity: 0.7;">
+                <span class="date-badge" style="background: #333;">Feb 21-22 (Weekend)</span>
+                <h2 class="t-text">Weekly Reset <span class="cn">每周重置</span></h2>
+            </div>
+
+            <div class="section-header">
+                <span class="section-icon">🐴</span>
+                <h2 class="t-text">Phase 5: The Sprint <span class="cn">第五阶段：冲刺</span></h2>
+            </div>
+
+            <div class="lunar-card" style="border-color: var(--cny-gold);">
+                <span class="date-badge">Feb 23 (Monday)</span>
+                <h2 class="t-text">Holi & Skyworth HQ <span class="cn">洒红节与创维总部</span></h2>
+                <p class="t-text">
+                    Storyboarding and rendering for upcoming Holi festival creatives. Simultaneously conducted asset collection for the critical Skyworth HQ 2025 Review Video assignment.
+                    <span class="cn">即将到来的洒红节创意的故事板和渲染。同时为关键的创维总部 2025 审查视频作业进行了资产收集。</span>
+                </p>
+                <div class="image-grid">
+                    <div class="media-box full-width-media">
+                        <img src="84.1.png">
+                        <div class="media-label" style="position:absolute; bottom:10px; right:10px; background:rgba(0,0,0,0.7); padding:2px 5px;">84.1.png (HQ Assets)</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lunar-card">
+                <span class="date-badge">Feb 24 (Tuesday)</span>
+                <h2 class="t-text">HQ Video Finalization <span class="cn">总部视频定稿</span></h2>
+                <p class="t-text">
+                    Finalized the editing for the Skyworth 2025 Review Video. Continued Holi creative rendering.
+                    <span class="cn">完成了创维 2025 审查视频的编辑。继续洒红节创意渲染。</span>
+                </p>
+                <p style="font-size: 0.9rem; color: var(--cny-gold); margin-top: 5px;">
+                    <strong>Output:</strong> 27 Renderings, 2 Designs.
+                </p>
+                <div class="image-grid">
+                    <div class="media-box"><video src="84.mp4" controls muted playsinline></video><div class="media-label">84.mp4</div></div>
+                </div>
+            </div>
+
+            <div class="lunar-card" style="background: rgba(40, 10, 10, 0.6);">
+                <span class="date-badge">Feb 25 (Wednesday - WFH)</span>
+                <h2 class="t-text">Creative Reboot <span class="cn">创意重启</span></h2>
+                <p class="t-text">
+                    Work From Home: Holi editing and essential sleep completion for a creative reboot. haha.
+                    <span class="cn">在家工作：洒红节编辑和必要的睡眠补充，以实现创意重启。哈哈。</span>
+                </p>
+            </div>
         </div>
 
-        <footer style="text-align: center; margin-top: 50px; font-family: 'Patrick Hand', cursive; color: #888;">
-            PaperCraft OS v1.0 | Made by Raghav
+        <div id="game-container">
+            <div id="start-screen">
+                <h2>🐎 The Lucky Horse Run 🧧</h2>
+                <p>Collect Red Envelopes for Good Luck!</p>
+                <button id="start-btn" onclick="startGame()">START GAME</button>
+            </div>
+            <div id="game-ui" style="display:none;">Score: <span id="score">0</span></div>
+            <canvas id="game-canvas"></canvas>
+        </div>
+
+        <footer style="text-align: center; margin-top: 50px; font-family: 'Cinzel', serif; color: var(--cny-gold-dark);">
+            Lunar Engine V4.0 | Developed by Raghav Sharma
         </footer>
 
     </div>
@@ -603,120 +804,108 @@
         function toggleLanguage() {
             isChinese = !isChinese;
             document.body.classList.toggle('chinese-mode');
-            loadQuestion();
         }
 
-        // --- NEW FUN ENGLISH GAME DATA ---
-        const questions = [
-            {
-                category: "Idiom / 成语",
-                question: "How do you say '加油' (Jiāyóu) in natural English?",
-                questionCn: "用地道的英语怎么说“加油”？",
-                correct: "Keep it up! / You can do it!",
-                options: [
-                    { txt: "Add Oil! (Chinglish)", correct: false },
-                    { txt: "Keep it up! / You can do it!", correct: true },
-                    { txt: "Add Gas!", correct: false }
-                ]
-            },
-            {
-                category: "Office Slang / 职场俚语",
-                question: "What is the English version of '摸鱼' (Touching Fish)?",
-                questionCn: "“摸鱼”用英语怎么说？",
-                correct: "Slacking off / Loafing",
-                options: [
-                    { txt: "Touching Fish (Literal)", correct: false },
-                    { txt: "Slacking off / Loafing", correct: true },
-                    { txt: "Fishing in the office", correct: false }
-                ]
-            },
-            {
-                category: "Fun Fact / 冷知识",
-                question: "Did you know? The phrase 'Long time no see' actually comes from...",
-                questionCn: "你知道吗？短语“Long time no see”其实来自……",
-                correct: "Chinese (好久不见)",
-                options: [
-                    { txt: "Old British English", correct: false },
-                    { txt: "Chinese (好久不见 - Pidgin English)", correct: true },
-                    { txt: "French Grammar", correct: false }
-                ]
-            },
-            {
-                category: "Idiom / 成语",
-                question: "How do you explain '马马虎虎' (Horse Horse Tiger Tiger) to an American?",
-                questionCn: "怎么向美国人解释“马马虎虎”？",
-                correct: "So-so / Average",
-                options: [
-                    { txt: "Dangerous Zoo", correct: false },
-                    { txt: "So-so / Average", correct: true },
-                    { txt: "Very fast and strong", correct: false }
-                ]
-            },
-            {
-                category: "Business / 商业",
-                question: "In marketing, what is a 'Blue Ocean' (蓝海)?",
-                questionCn: "在市场营销中，什么是“蓝海”？",
-                correct: "A new market with no competition",
-                options: [
-                    { txt: "A new market with no competition", correct: true },
-                    { txt: "A sad business meeting", correct: false },
-                    { txt: "Selling water products", correct: false }
-                ]
-            }
-        ];
+        // --- GENERATE LANTERNS ---
+        const lanternContainer = document.getElementById('lantern-container');
+        for (let i = 0; i < 15; i++) {
+            const lantern = document.createElement('div');
+            lantern.classList.add('lantern');
+            lantern.style.left = Math.random() * 100 + 'vw';
+            lantern.style.animationDuration = (Math.random() * 10 + 15) + 's';
+            lantern.style.animationDelay = (Math.random() * -20) + 's';
+            lanternContainer.appendChild(lantern);
+        }
 
-        let currentQ = 0;
+        // --- THE LUCKY HORSE GAME ENGINE ---
+        const canvas = document.getElementById('game-canvas');
+        const ctx = canvas.getContext('2d');
+        let gameRunning = false;
         let score = 0;
+        let horse = { x: 0, y: 0, width: 60, height: 40 };
+        let envelopes = [];
+        let mouseX = 0;
 
-        function startQuiz() {
-            currentQ = 0; score = 0;
-            document.getElementById('score-board').innerText = "Score: 0";
-            loadQuestion();
+        function resizeCanvas() {
+            canvas.width = document.getElementById('game-container').offsetWidth;
+            canvas.height = document.getElementById('game-container').offsetHeight;
+            horse.y = canvas.height - 60;
+        }
+        window.addEventListener('resize', resizeCanvas);
+
+        canvas.addEventListener('mousemove', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            mouseX = e.clientX - rect.left;
+        });
+        
+        // Touch support for mobile managers
+        canvas.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+            const rect = canvas.getBoundingClientRect();
+            mouseX = e.touches[0].clientX - rect.left;
+        }, { passive: false });
+
+        function startGame() {
+            document.getElementById('start-screen').style.display = 'none';
+            document.getElementById('game-ui').style.display = 'block';
+            resizeCanvas();
+            gameRunning = true;
+            score = 0;
+            envelopes = [];
+            gameLoop();
+            spawnEnvelope();
         }
 
-        function loadQuestion() {
-            const qTitle = document.getElementById('question');
-            const optDiv = document.getElementById('options');
-
-            if (currentQ >= questions.length) {
-                qTitle.innerHTML = isChinese 
-                    ? "🎉 游戏结束！你的英语太棒了！" 
-                    : "🎉 GAME OVER! Your English is Awesome!";
-                optDiv.innerHTML = "";
-                return;
-            }
-
-            const q = questions[currentQ];
-            const catDisplay = `<div style='font-size:0.9rem; color:#888; margin-bottom:5px;'>${q.category}</div>`;
-            const qText = isChinese ? q.questionCn : q.question;
-            qTitle.innerHTML = catDisplay + qText;
-            
-            optDiv.innerHTML = "";
-            let shuffled = [...q.options].sort(() => Math.random() - 0.5);
-
-            shuffled.forEach(opt => {
-                const btn = document.createElement('button');
-                btn.className = 'option-btn';
-                btn.innerText = opt.txt;
-                btn.onclick = () => checkAnswer(btn, opt.correct);
-                optDiv.appendChild(btn);
+        function spawnEnvelope() {
+            if (!gameRunning) return;
+            envelopes.push({
+                x: Math.random() * (canvas.width - 30),
+                y: -40,
+                width: 30, height: 40,
+                speed: Math.random() * 2 + 1
             });
+            setTimeout(spawnEnvelope, Math.random() * 1000 + 500);
         }
 
-        function checkAnswer(btn, isCorrect) {
-            const btns = document.querySelectorAll('.option-btn');
-            btns.forEach(b => b.disabled = true);
-            if (isCorrect) {
-                btn.classList.add('correct');
-                score += 100;
-                document.getElementById('score-board').innerText = isChinese ? "得分: " + score : "Score: " + score;
-            } else {
-                btn.classList.add('wrong');
+        function drawHorse(x, y) {
+            ctx.font = "50px Arial";
+            ctx.fillText("🐎", x - 25, y + 40);
+        }
+
+        function drawEnvelope(e) {
+            ctx.font = "30px Arial";
+            ctx.fillText("🧧", e.x, e.y + 30);
+        }
+
+        function gameLoop() {
+            if (!gameRunning) return;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Update Horse Pos
+            horse.x = mouseX;
+            drawHorse(horse.x, horse.y);
+
+            // Update & Draw Envelopes
+            for (let i = envelopes.length - 1; i >= 0; i--) {
+                let e = envelopes[i];
+                e.y += e.speed;
+                drawEnvelope(e);
+
+                // Collision Detection (Simple Box)
+                if (horse.x < e.x + e.width && horse.x + horse.width > e.x &&
+                    horse.y < e.y + e.height && horse.y + horse.height > e.y) {
+                    score += 10;
+                    document.getElementById('score').innerText = score;
+                    envelopes.splice(i, 1); // Remove caught envelope
+                }
+                // Remove off-screen
+                else if (e.y > canvas.height) {
+                    envelopes.splice(i, 1);
+                }
             }
-            setTimeout(() => { currentQ++; loadQuestion(); }, 1500);
-        }
 
-        startQuiz();
+            requestAnimationFrame(gameLoop);
+        }
     </script>
 </body>
 </html>
