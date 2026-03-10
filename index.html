@@ -3,313 +3,236 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Raghav's Creative Journey - Lunar Edition</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Noto+Sans+SC:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <title>Raghav's Creative Journey - V5.5 ARCADE OVERDRIVE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700;900&family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --cny-red-dark: #8b0000;
-            --cny-red-bright: #d32f2f;
-            --cny-gold: #ffd700;
-            --cny-gold-dark: #daa520;
-            --paper-bg: rgba(40, 10, 10, 0.85);
-            --text-primary: #fff8e7;
-            --text-secondary: #ffb7b7;
-            --accent-glow: 0 0 15px rgba(255, 215, 0, 0.5);
-            --shadow-card: 0 10px 30px rgba(0,0,0,0.5), inset 0 0 20px rgba(139, 0, 0, 0.3);
+            --bg-dark: #0a0a0c;
+            --neon-pink: #ff007f;
+            --neon-cyan: #00f0ff;
+            --neon-yellow: #ffea00;
+            --neon-purple: #8a2be2;
+            --glass-bg: rgba(15, 15, 20, 0.7);
+            --text-main: #f8f8ff;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
+        /* INCREASED BASE FONT SIZE FOR BETTER READABILITY */
+        html { font-size: 18px; } 
+
         body {
-            background-color: #1a0505;
-            color: var(--text-primary);
-            font-family: 'Inter', 'Noto Sans SC', sans-serif;
-            line-height: 1.6;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Outfit', 'Noto Sans SC', sans-serif;
+            line-height: 1.7;
             overflow-x: hidden;
             padding-bottom: 100px;
+            cursor: crosshair;
         }
 
-        /* --- ANIMATED LUNAR BACKGROUND --- */
-        .lunar-bg {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            z-index: -2;
-            background: linear-gradient(to bottom, #3e0000, #1a0505);
-            overflow: hidden;
+        /* --- INSANE HOLI X F1 BACKGROUND --- */
+        .neon-bg {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: -2; background: #050505; overflow: hidden;
+        }
+        
+        .color-orb {
+            position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.4;
+            animation: orbFloat 20s infinite alternate ease-in-out;
+        }
+        .orb-1 { width: 450px; height: 450px; background: var(--neon-pink); top: -10%; left: -10%; }
+        .orb-2 { width: 550px; height: 550px; background: var(--neon-cyan); bottom: -20%; right: -10%; animation-delay: -5s; }
+        .orb-3 { width: 350px; height: 350px; background: var(--neon-yellow); top: 40%; left: 40%; animation-delay: -10s; }
+        
+        @keyframes orbFloat {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(100px, 150px) scale(1.3); }
         }
 
-        .lunar-pattern {
-            position: absolute; top:0; left:0; width:100%; height:100%;
-            background-image: url('https://www.transparenttextures.com/patterns/oriental-tiles.png');
-            opacity: 0.2;
+        /* Racing Grid Overlay */
+        .grid-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.04) 2px, transparent 2px),
+                linear-gradient(90deg, rgba(255,255,255,0.04) 2px, transparent 2px);
+            background-size: 50px 50px; z-index: -1;
+            transform: perspective(500px) rotateX(60deg) translateY(-100px) scale(3);
+            animation: gridMove 10s linear infinite;
+        }
+        @keyframes gridMove { 0% { background-position: 0 0; } 100% { background-position: 0 50px; } }
+
+        /* Floating F1 Cars */
+        .floating-f1 {
+            position: fixed; font-size: 5rem; opacity: 0.8; z-index: -1;
+            animation: f1Zoom 12s linear infinite; filter: drop-shadow(0 0 15px var(--neon-cyan));
+        }
+        @keyframes f1Zoom {
+            0% { transform: translate(-20vw, 110vh) rotate(45deg); }
+            100% { transform: translate(120vw, -20vh) rotate(45deg); }
         }
 
-        /* Floating Lanterns */
-        .lantern {
-            position: absolute;
-            width: 60px; height: 80px;
-            background: radial-gradient(circle, var(--cny-red-bright), var(--cny-red-dark));
-            border-radius: 30px;
-            box-shadow: 0 0 20px var(--cny-red-bright), 0 5px 15px #000;
-            animation: floatUp linear infinite;
-            opacity: 0.7;
+        /* --- CLICK EXPLOSION (HOLI SPLASH) --- */
+        .splash-anim {
+            position: absolute; width: 25px; height: 25px; border-radius: 50%;
+            transform: translate(-50%, -50%); pointer-events: none;
+            animation: explode 0.5s ease-out forwards; z-index: 9999;
+            box-shadow: 0 0 40px currentcolor, inset 0 0 20px currentcolor;
         }
-        .lantern::before { content: ''; position: absolute; top: -5px; left: 25px; width: 10px; height: 5px; background: var(--cny-gold); }
-        .lantern::after { content: '福'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: var(--cny-gold); font-family: 'Noto Sans SC'; font-weight: bold; font-size: 24px; }
-
-        @keyframes floatUp {
-            0% { transform: translateY(110vh) rotate(0deg) scale(0.8); opacity: 0; }
-            10% { opacity: 0.8; }
-            90% { opacity: 0.8; }
-            100% { transform: translateY(-10vh) rotate(10deg) scale(1); opacity: 0; }
+        @keyframes explode {
+            0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(25); opacity: 0; }
         }
 
-        /* Galloping Horses */
-        .horse-bg {
-            position: absolute;
-            bottom: 10%;
-            left: -20%;
-            font-size: 8rem;
-            opacity: 0.1;
-            color: var(--cny-gold);
-            animation: gallop 25s linear infinite;
-            filter: blur(2px);
-        }
-        @keyframes gallop {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(130vw); }
-        }
-
-        /* --- NAVIGATION (GOLDEN SCROLL STYLE) --- */
+        /* --- NAVIGATION --- */
         .nav-bar {
-            position: fixed;
-            top: 20px; left: 50%; transform: translateX(-50%);
-            background: linear-gradient(to right, var(--cny-red-dark), #5a0000, var(--cny-red-dark));
-            padding: 12px 30px;
-            border-radius: 50px;
-            display: flex; gap: 20px;
-            z-index: 1000;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.6);
-            border: 2px solid var(--cny-gold-dark);
-            flex-wrap: wrap;
-            justify-content: center;
+            position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+            background: rgba(10, 10, 10, 0.85); padding: 12px 25px;
+            border-radius: 50px; display: flex; gap: 15px; z-index: 1000;
+            backdrop-filter: blur(15px); border: 2px solid var(--neon-cyan);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.4); flex-wrap: wrap; justify-content: center;
         }
 
         .nav-btn {
-            background: transparent; border: none;
-            color: var(--cny-gold); font-family: 'Cinzel', serif;
-            font-size: 1rem; cursor: pointer; font-weight: bold;
-            padding: 8px 15px; transition: all 0.3s;
-            position: relative;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            background: transparent; border: none; color: #fff;
+            font-family: 'Outfit', sans-serif; font-size: 1rem; font-weight: 800;
+            padding: 10px 18px; cursor: pointer; border-radius: 30px; transition: 0.3s;
+            text-transform: uppercase; letter-spacing: 1.5px;
         }
-        .nav-btn::after {
-            content: ''; position: absolute; bottom: 0; left: 50%; width: 0; height: 2px; background: var(--cny-gold); transition:all 0.3s;
-        }
-        .nav-btn:hover { color: #fff; transform: translateY(-2px); }
-        .nav-btn:hover::after { width: 100%; left: 0; }
-        .translate-btn { color: #fff; background: rgba(218, 165, 32, 0.3); border-radius: 20px; }
+        .nav-btn:hover, .nav-btn.active { background: var(--neon-pink); color: #fff; box-shadow: 0 0 20px var(--neon-pink); transform: scale(1.05); }
+        .translate-btn { background: var(--neon-purple); border: 2px solid var(--neon-purple); }
 
         /* --- CONTAINER --- */
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 140px 20px 50px 20px;
-        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 150px 20px 50px 20px; }
 
-        /* --- TYPOGRAPHY --- */
-        h1, h2 { font-family: 'Cinzel', 'Noto Sans SC', serif; color: var(--cny-gold); }
-        
+        /* --- TYPOGRAPHY (BIGGER & BOLDER) --- */
         h1 {
-            font-size: 3.8rem; text-align: center;
-            margin-bottom: 0.5rem;
-            text-shadow: 2px 2px 10px rgba(218, 165, 32, 0.5);
+            font-size: 4.8rem; text-align: center; font-weight: 900;
+            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-pink), var(--neon-yellow));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem; line-height: 1.1; text-transform: uppercase;
+            filter: drop-shadow(0px 4px 15px rgba(255,0,127,0.5));
         }
+        h2 { font-size: 2.4rem; margin-bottom: 1.2rem; color: #fff; font-weight: 900; letter-spacing: 1px; }
+        h3 { text-align: center; font-size: 1.4rem; color: #ccc; margin-bottom: 4rem; text-transform: uppercase; letter-spacing: 4px; font-weight: 700; }
         
-        h3 {
-            text-align: center; font-size: 1.2rem; color: var(--text-secondary);
-            margin-bottom: 5rem; font-weight: 400;
-            letter-spacing: 2px;
-        }
+        p.t-text { font-size: 1.25rem; font-weight: 500; color: #e0e0e0; margin-bottom: 1rem; }
 
-        /* --- LUNAR CARDS --- */
-        .lunar-card {
-            background: var(--paper-bg);
-            padding: 3rem;
-            margin-bottom: 4rem;
-            position: relative;
-            border: 2px solid var(--cny-gold-dark);
-            border-radius: 16px;
-            box-shadow: var(--shadow-card);
-            backdrop-filter: blur(10px);
-            overflow: hidden;
-            transition: transform 0.3s;
+        /* --- GLASS CARDS --- */
+        .neon-card {
+            background: var(--glass-bg); padding: 3rem; margin-bottom: 4rem;
+            border-radius: 24px; border: 2px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.6); transition: 0.3s; position: relative; overflow: hidden;
         }
-
-        .lunar-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(218, 165, 32, 0.2); }
-
-        /* Corner Ornaments */
-        .lunar-card::before, .lunar-card::after {
-            content: ''; position: absolute; width: 50px; height: 50px;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='%23daa520'%3E%3Cpath d='M10,10 L90,10 L90,90 L10,90 Z M20,20 L20,80 L80,80 L80,20 Z' /%3E%3C/svg%3E"); /* Simple gold frame SVG placeholder */
-            background-size: contain; opacity: 0.5;
+        .neon-card:hover { transform: translateY(-8px); border-color: var(--neon-cyan); box-shadow: 0 15px 50px rgba(0, 240, 255, 0.25); }
+        
+        /* Card Glowing Accent */
+        .neon-card::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 6px; height: 100%;
+            background: linear-gradient(to bottom, var(--neon-cyan), var(--neon-pink));
         }
-        .lunar-card::before { top: 10px; left: 10px; }
-        .lunar-card::after { bottom: 10px; right: 10px; transform: rotate(180deg); }
 
         .date-badge {
-            display: inline-block;
-            background: linear-gradient(45deg, var(--cny-red-dark), var(--cny-red-bright));
-            color: var(--cny-gold);
-            font-family: 'Cinzel', serif;
-            padding: 6px 18px;
-            border-radius: 50px;
-            margin-bottom: 1.5rem;
-            font-size: 1.1rem;
-            border: 1px solid var(--cny-gold);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            display: inline-block; background: #fff; color: #000;
+            font-weight: 900; padding: 6px 18px; border-radius: 8px;
+            margin-bottom: 1.5rem; font-size: 1.2rem; text-transform: uppercase;
+            box-shadow: 4px 4px 0 var(--neon-pink); letter-spacing: 1px;
         }
 
         /* --- SECTION DIVIDERS --- */
-        .section-header {
-            margin: 6rem 0 3rem 0;
-            display: flex; align-items: center; justify-content: center; gap: 20px;
-            position: relative;
-        }
-        .section-header::before, .section-header::after {
-            content: ''; height: 2px; flex-grow: 1; background: linear-gradient(to right, transparent, var(--cny-gold), transparent);
-        }
-        .section-header h2 { font-size: 2.8rem; margin: 0; text-shadow: 2px 2px 5px #000; }
-        .section-icon { font-size: 3rem; filter: drop-shadow(0 0 10px var(--cny-gold)); }
+        .section-header { margin: 7rem 0 4rem 0; display: flex; align-items: center; justify-content: center; gap: 20px; }
+        .section-header h2 { font-size: 3.5rem; margin: 0; background: #fff; color: #000; padding: 8px 25px; transform: skewX(-12deg); box-shadow: 6px 6px 0 var(--neon-cyan); }
+        .section-icon { font-size: 3.5rem; }
 
-        /* --- MEDIA GRID (UPDATED) --- */
-        .image-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 25px;
-            margin-top: 2rem;
-        }
-
+        /* --- MEDIA GRID (NATURAL & BIG) --- */
+        .image-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; margin-top: 2rem; }
         .media-box {
-            background: #000;
-            padding: 8px;
-            border: 2px solid var(--cny-gold-dark);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-            transition: all 0.4s;
-            position: relative;
-            border-radius: 8px;
+            background: #111; padding: 6px; border-radius: 12px; border: 2px solid #333;
+            transition: 0.3s; position: relative;
         }
-
-        .media-box:hover { transform: scale(1.03); z-index: 10; border-color: var(--cny-red-bright); box-shadow: 0 0 20px var(--cny-red-bright); }
-
-        .media-box img, .media-box video {
-            width: 100%; height: auto; display: block; border-radius: 4px;
-        }
+        .media-box:hover { transform: scale(1.05); z-index: 10; border-color: var(--neon-yellow); box-shadow: 0 0 25px rgba(255, 234, 0, 0.4); }
+        .media-box img, .media-box video { width: 100%; height: auto; display: block; border-radius: 6px; }
+        .media-label { font-size: 0.9rem; color: #aaa; margin-top: 8px; text-align: right; font-weight: 800; }
         
-        .media-label {
-            font-family: 'Inter', sans-serif; font-size: 0.85rem; color: var(--cny-gold);
-            margin-top: 8px; text-align: right; opacity: 0.8;
-        }
+        .full-width-media { grid-column: 1 / -1; }
+        .full-width-media img { max-height: 700px; object-fit: contain; width: 100%; background: #000; }
 
-        /* Special class for landscape images */
-        .full-width-media {
-            grid-column: 1 / -1; /* Span all columns */
-            aspect-ratio: 16 / 9;
-        }
-        .full-width-media img {
-            height: 100%; object-fit: cover;
-        }
-
-        /* --- TRANSLATION & VOCAB --- */
-        .t-text span.cn { display: none; color: var(--text-secondary); font-size: 1em; margin-top: 10px; padding-top: 10px; border-top: 1px dashed rgba(218, 165, 32, 0.3); font-family: 'Noto Sans SC', sans-serif; }
+        /* --- TRANSLATION HIGHLIGHTS --- */
+        .t-text span.cn { display: none; color: #00f0ff; font-size: 0.95em; margin-top: 10px; font-weight: 400; border-top: 1px dashed rgba(255,255,255,0.2); padding-top: 10px; font-family: 'Noto Sans SC', sans-serif; }
         body.chinese-mode .t-text span.cn { display: block; }
-        
-        .vocab { color: var(--cny-gold); font-weight: 700; border-bottom: 1px dotted var(--cny-gold); }
+        .vocab { color: var(--neon-yellow); font-weight: 900; border-bottom: 3px dashed var(--neon-yellow); cursor: help; }
 
-        /* --- HUMOUR STAMP --- */
+        /* --- HUMOR STAMP --- */
         .humor-stamp {
-            position: absolute; bottom: 30px; right: 30px;
-            font-family: 'Cinzel', serif; color: var(--cny-red-bright);
-            border: 4px solid var(--cny-red-bright);
-            padding: 10px 20px; font-size: 1.5rem; font-weight: bold;
-            transform: rotate(-15deg); opacity: 0.9;
-            background: rgba(0,0,0,0.8); z-index: 20;
-            box-shadow: 0 0 15px var(--cny-red-bright);
+            position: absolute; bottom: 25px; right: 25px; color: var(--neon-yellow);
+            border: 4px solid var(--neon-yellow); padding: 12px 20px; font-size: 1.4rem; font-weight: 900;
+            transform: rotate(-10deg); background: rgba(0,0,0,0.85); z-index: 20;
+            box-shadow: 0 0 20px var(--neon-yellow); text-transform: uppercase;
         }
-        
-        /* --- GAME CONTAINER --- */
+
+        /* --- THE F1 HOLI GAME --- */
         #game-container {
-            width: 100%; height: 500px;
-            background: rgba(20, 0, 0, 0.9);
-            border: 4px solid var(--cny-gold);
-            border-radius: 20px;
-            position: relative;
-            overflow: hidden;
-            cursor: none; /* Hide cursor for game */
-            box-shadow: inset 0 0 50px rgba(139, 0, 0, 0.5);
-            margin-top: 5rem;
+            width: 100%; height: 550px; background: #080808; border: 5px solid var(--neon-cyan);
+            border-radius: 25px; position: relative; overflow: hidden; margin-top: 6rem;
+            box-shadow: 0 0 40px rgba(0, 240, 255, 0.3); cursor: none;
         }
         #game-canvas { display: block; }
-        #game-ui {
-            position: absolute; top: 20px; left: 20px;
-            color: var(--cny-gold); font-family: 'Cinzel', serif; font-size: 1.5rem; z-index: 10;
-            text-shadow: 2px 2px 4px #000;
-        }
+        #game-ui { position: absolute; top: 20px; left: 20px; color: #fff; font-size: 2rem; font-weight: 900; z-index: 10; text-shadow: 3px 3px 0 var(--neon-pink); }
         #start-screen {
-            position: absolute; top:0; left:0; width:100%; height:100%;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            background: rgba(0,0,0,0.8); color: var(--cny-gold); z-index: 20;
+            position: absolute; top:0; left:0; width:100%; height:100%; display: flex; flex-direction: column; justify-content: center; align-items: center;
+            background: rgba(0,0,0,0.85); z-index: 20; text-align: center; padding: 20px;
         }
+        #start-screen h2 { font-size: 3.5rem; color: var(--neon-yellow); text-transform: uppercase; margin-bottom: 15px; text-shadow: 0 0 20px rgba(255, 234, 0, 0.5); }
         #start-btn {
-            padding: 15px 40px; font-size: 1.5rem; background: var(--cny-red-dark); color: var(--cny-gold);
-            border: 2px solid var(--cny-gold); border-radius: 50px; cursor: pointer;
-            font-family: 'Cinzel', serif; margin-top: 20px; transition: 0.3s;
+            padding: 18px 50px; font-size: 1.8rem; background: var(--neon-pink); color: #fff;
+            border: none; border-radius: 50px; cursor: pointer; font-weight: 900; margin-top: 25px;
+            box-shadow: 0 8px 25px rgba(255, 0, 127, 0.6); transition: 0.3s;
         }
-        #start-btn:hover { background: var(--cny-red-bright); box-shadow: 0 0 20px var(--cny-gold); }
+        #start-btn:hover { transform: scale(1.1); background: var(--neon-cyan); box-shadow: 0 8px 25px rgba(0, 240, 255, 0.6); }
 
     </style>
 </head>
 <body>
 
-    <div class="lunar-bg">
-        <div class="lunar-pattern"></div>
-        <div id="lantern-container"></div>
-        <div class="horse-bg" style="top: 60%; animation-delay: 0s;">🐎</div>
-        <div class="horse-bg" style="top: 75%; animation-delay: -12s; opacity: 0.05; font-size: 6rem;">🐎</div>
+    <div class="neon-bg">
+        <div class="grid-overlay"></div>
+        <div class="color-orb orb-1"></div>
+        <div class="color-orb orb-2"></div>
+        <div class="color-orb orb-3"></div>
+        <div class="floating-f1" style="animation-delay: 0s;">🏎️</div>
+        <div class="floating-f1" style="animation-delay: -7s; font-size: 3rem; filter: drop-shadow(0 0 8px var(--neon-pink)); animation-duration: 9s;">🏎️</div>
     </div>
 
+    <div id="sound-alert" style="position:fixed; bottom:20px; left:20px; background:var(--neon-yellow); color:#000; padding:10px 20px; font-weight:bold; border-radius:30px; z-index:9999; box-shadow: 0 0 15px var(--neon-yellow); animation: fadeOut 5s forwards; animation-delay: 3s;">
+        🔊 Click anywhere to activate Arcade Sounds!
+    </div>
+    <style>@keyframes fadeOut { to { opacity: 0; pointer-events: none; } }</style>
+
     <div class="nav-bar">
-        <button class="nav-btn" onclick="scrollToSection('week1')">Weeks 1-3 (Jan 12 - Feb 6)</button>
-        <button class="nav-btn" onclick="scrollToSection('week4')">Weeks 4-6 (Feb 9 - Feb 25) ✨</button>
+        <button class="nav-btn" onclick="scrollToSection('week1')">Wk 1-3</button>
+        <button class="nav-btn" onclick="scrollToSection('week4')">Wk 4-6</button>
+        <button class="nav-btn active" style="background:var(--neon-yellow); color:#000;" onclick="scrollToSection('week7')">Wk 7-8 (NEW) 🔥</button>
         <button class="nav-btn translate-btn" onclick="toggleLanguage()">文 / EN</button>
     </div>
 
     <div class="container">
         
         <header>
-            <h1 class="t-text">
-                Creative Journey 2026
-                <span class="cn">创意之旅 2026</span>
-            </h1>
-            <h3 class="t-text">
-                Raghav Sharma | Graphic Intern | Lunar Edition
-                <span class="cn">Raghav Sharma | 平面设计实习生 | 新春特别版</span>
-            </h3>
+            <h1 class="t-text">Creative Overdrive 2026 <span class="cn">创意超速 2026</span></h1>
+            <h3 class="t-text">Raghav Sharma | F1 x Holi Edition <span class="cn">Raghav Sharma | F1 x 洒红节特别版</span></h3>
         </header>
 
         <div id="week1">
             <div class="section-header">
-                <span class="section-icon">🐲</span>
-                <h2 class="t-text">Phase 1: The Foundation <span class="cn">第一阶段：基础奠定</span></h2>
+                <span class="section-icon">🏁</span>
+                <h2 class="t-text">Phase 1: Foundation <span class="cn">第一阶段：基础</span></h2>
             </div>
 
-            <div class="lunar-card">
+            <div class="neon-card">
                 <span class="date-badge">Jan 12</span>
                 <h2 class="t-text">Strategic Genesis <span class="cn">战略起源</span></h2>
-                <p class="t-text">
-                    Analyzed the <span class="vocab">competitive landscape</span>. We identified Coocaa’s opportunity to be the avant-garde challenger, using evolutionary psychology to trigger attention.
-                    <span class="cn">分析了竞争格局。我们确定了 Coocaa 作为前卫挑战者的机会，利用进化心理学来引发关注。</span>
-                </p>
+                <p class="t-text">Analyzed the <span class="vocab">competitive landscape</span>. Identified Coocaa’s opportunity to be the avant-garde challenger.<span class="cn">分析了竞争格局。确定了 Coocaa 作为前卫挑战者的机会。</span></p>
                 <div class="image-grid">
                     <div class="media-box"><img src="1.png"><div class="media-label">1.png</div></div>
                     <div class="media-box"><img src="2.png"><div class="media-label">2.png</div></div>
@@ -317,55 +240,27 @@
                 </div>
             </div>
 
-            <div class="lunar-card">
-                <span class="date-badge">Jan 13</span>
-                <h2 class="t-text">Concept Incubation <span class="cn">概念孵化</span></h2>
-                <p class="t-text">
-                    Deep dive into "Halo Control" hardware. We conceptualized "The Divine Portal," a <span class="vocab">juxtaposition</span> of traditional culture and futuristic tech.
-                    <span class="cn">深入研究“光晕控制”硬件。我们构思了“神圣门户”，将传统文化与未来科技并列。</span>
-                </p>
+            <div class="neon-card">
+                <span class="date-badge">Jan 13-15</span>
+                <h2 class="t-text">Concepts & Culture <span class="cn">概念与文化</span></h2>
+                <p class="t-text">Conceptualized "The Divine Portal" and executed Makar Sankranti Real-Time Marketing.<span class="cn">构思了“神圣门户”并执行了马卡尔桑克拉提节的实时营销。</span></p>
                 <div class="image-grid">
                     <div class="media-box"><img src="4.png"><div class="media-label">4.png</div></div>
                     <div class="media-box"><img src="5.png"><div class="media-label">5.png</div></div>
                     <div class="media-box"><video src="6.mp4" controls muted playsinline></video><div class="media-label">6.mp4</div></div>
-                </div>
-            </div>
-
-            <div class="lunar-card">
-                <span class="date-badge">Jan 14 (WFH)</span>
-                <h2 class="t-text">Social Visuals <span class="cn">社交视觉</span></h2>
-                <p class="t-text">
-                    Focused on Instagram minimalism. Created "Never Miss the Detail" concept using glass reflections.
-                    <span class="cn">专注于 Instagram 极简主义。使用玻璃反射创建了“不错过细节”概念。</span>
-                </p>
-                <div class="image-grid">
                     <div class="media-box"><img src="7.png"><div class="media-label">7.png</div></div>
                     <div class="media-box"><img src="8.png"><div class="media-label">8.png</div></div>
                     <div class="media-box"><video src="9.mp4" controls muted playsinline></video><div class="media-label">9.mp4</div></div>
-                </div>
-            </div>
-
-            <div class="lunar-card">
-                <span class="date-badge">Jan 15</span>
-                <h2 class="t-text">Cultural Resonance <span class="cn">文化共鸣</span></h2>
-                <p class="t-text">
-                    Executed Real-Time Marketing for Makar Sankranti. Blending festival kites with screen technology.
-                    <span class="cn">执行了马卡尔桑克拉提节的实时营销。将节日风筝与屏幕技术融合。</span>
-                </p>
-                <div class="image-grid">
                     <div class="media-box"><img src="10.png"><div class="media-label">10.png</div></div>
                     <div class="media-box"><img src="11.png"><div class="media-label">11.png</div></div>
                     <div class="media-box"><video src="12.mp4" controls muted playsinline></video><div class="media-label">12.mp4</div></div>
                 </div>
             </div>
 
-            <div class="lunar-card">
-                <span class="date-badge">Jan 16-18 (Weekend Sprint)</span>
-                <h2 class="t-text">Motion & Assets <span class="cn">动态与资产</span></h2>
-                <p class="t-text">
-                    Rendered 50+ frames and 8 motion assets to fix the <span class="vocab">monotony</span> of static Amazon listings.
-                    <span class="cn">渲染了50多帧和8个动态资产，解决了亚马逊列表的单调问题。</span>
-                </p>
+            <div class="neon-card">
+                <span class="date-badge">Jan 16-19</span>
+                <h2 class="t-text">Motion Sprint <span class="cn">动态冲刺</span></h2>
+                <p class="t-text">Rendered 50+ frames and 8 motion assets to fix static Amazon listings.<span class="cn">渲染了50多帧和8个动态资产以修复静态的亚马逊列表。</span></p>
                 <div class="image-grid">
                     <div class="media-box"><img src="13.png"><div class="media-label">13.png</div></div>
                     <div class="media-box"><img src="14.png"><div class="media-label">14.png</div></div>
@@ -376,48 +271,19 @@
                     <div class="media-box"><video src="19.mp4" controls muted playsinline></video><div class="media-label">19.mp4</div></div>
                     <div class="media-box"><img src="20.png"><div class="media-label">20.png</div></div>
                     <div class="media-box"><video src="21.mp4" controls muted playsinline></video><div class="media-label">21.mp4</div></div>
-                </div>
-            </div>
-
-            <div class="lunar-card">
-                <span class="date-badge">Jan 19</span>
-                <h2 class="t-text">Packaging Polish <span class="cn">包装打磨</span></h2>
-                <p class="t-text">
-                    Finalized packaging SKUs for flagship models using AI upscaling.
-                    <span class="cn">使用 AI 放大技术完成了旗舰型号的包装 SKU。</span>
-                </p>
-                <div class="image-grid">
                     <div class="media-box"><img src="22.png"><div class="media-label">22.png</div></div>
                 </div>
             </div>
-        
-            <div class="section-header">
-                <span class="section-icon">🚀</span>
-                <h2 class="t-text">Phase 2: Scale <span class="cn">第二阶段：规模化</span></h2>
-            </div>
-
-            <div class="lunar-card">
-                <span class="date-badge">Jan 20-21</span>
-                <h2 class="t-text">Storyboard & SKU <span class="cn">故事板与SKU</span></h2>
-                <p class="t-text">
-                    Focused on Amazon SKU refinement. Developed 'NEVER MISS THE CATCH' storyboard highlighting high refresh rates.
-                    <span class="cn">专注于亚马逊 SKU 细化。开发了强调高刷新率的“不错过每一次捕捉”故事板。</span>
-                </p>
+            
+            <div class="neon-card">
+                <span class="date-badge">Jan 20-30</span>
+                <h2 class="t-text">Massive Iteration <span class="cn">大规模迭代</span></h2>
+                <p class="t-text">Generated 74 design variations for Coocaa Amazon Store, Republic Day campaigns, and finalized Mini LED videos.<span class="cn">为 Coocaa 亚马逊商店生成了 74 个设计变体，共和国日营销，并完成了 Mini LED 视频。</span></p>
+                <div class="humor-stamp t-text">Used None! 😒<span class="cn">一个没用！😒</span></div>
                 <div class="image-grid">
                     <div class="media-box"><img src="43.png"><div class="media-label">43.png</div></div>
                     <div class="media-box"><img src="23.png"><div class="media-label">23.png</div></div>
                     <div class="media-box"><img src="24.png"><div class="media-label">24.png</div></div>
-                </div>
-            </div>
-
-            <div class="lunar-card">
-                <span class="date-badge">Jan 22-23</span>
-                <h2 class="t-text">Massive Iteration <span class="cn">大规模迭代</span></h2>
-                <p class="t-text">
-                    Generated 74 design <span class="vocab">variations</span> for the Coocaa Amazon Store (Republic Day & Daily Use).
-                    <span class="cn">为 Coocaa 亚马逊商店生成了 74 个设计变体。</span>
-                </p>
-                <div class="image-grid">
                     <div class="media-box"><img src="25.png"><div class="media-label">25.png</div></div>
                     <div class="media-box"><img src="26.png"><div class="media-label">26.png</div></div>
                     <div class="media-box"><img src="27.png"><div class="media-label">27.png</div></div>
@@ -436,34 +302,11 @@
                     <div class="media-box"><img src="40.png"><div class="media-label">40.png</div></div>
                     <div class="media-box"><img src="41.png"><div class="media-label">41.png</div></div>
                     <div class="media-box"><img src="42.png"><div class="media-label">42.png</div></div>
-                </div>
-            </div>
-
-            <div class="lunar-card">
-                <span class="date-badge">Jan 24-26 (Republic Day)</span>
-                <h2 class="t-text">Festive Campaign <span class="cn">节日营销</span></h2>
-                <p class="t-text">
-                    Created high-energy video promotions and posters. Spent hours on AI drafts to blend patriotism with tech.
-                    <span class="cn">制作了高能视频促销和海报。花了很多时间在AI草稿上，以融合爱国主义与科技。</span>
-                </p>
-                <div class="humor-stamp">USED NONE! 😒</div>
-                <div class="image-grid">
                     <div class="media-box"><video src="44.mp4" controls muted playsinline></video><div class="media-label">44.mp4</div></div>
                     <div class="media-box"><video src="45.mp4" controls muted playsinline></video><div class="media-label">45.mp4</div></div>
                     <div class="media-box"><img src="46.png"><div class="media-label">46.png</div></div>
                     <div class="media-box"><img src="47.png"><div class="media-label">47.png</div></div>
                     <div class="media-box"><img src="48.png"><div class="media-label">48.png</div></div>
-                </div>
-            </div>
-
-            <div class="lunar-card">
-                <span class="date-badge">Jan 27-28</span>
-                <h2 class="t-text">Mini LED Expansion <span class="cn">Mini LED 扩展</span></h2>
-                <p class="t-text">
-                    Produced 40+ new variations focusing on composition for Mini LED posters.
-                    <span class="cn">为 Mini LED 海报制作了 40 多个注重构图的新变体。</span>
-                </p>
-                <div class="image-grid">
                     <div class="media-box"><img src="49.png"><div class="media-label">49.png</div></div>
                     <div class="media-box"><img src="50.png"><div class="media-label">50.png</div></div>
                     <div class="media-box"><img src="51.png"><div class="media-label">51.png</div></div>
@@ -475,103 +318,24 @@
                     <div class="media-box"><img src="57.png"><div class="media-label">57.png</div></div>
                     <div class="media-box"><img src="58.png"><div class="media-label">58.png</div></div>
                     <div class="media-box"><img src="59.png"><div class="media-label">59.png</div></div>
-                </div>
-            </div>
-
-            <div class="lunar-card">
-                <span class="date-badge">Jan 29</span>
-                <h2 class="t-text">Leave (Inspiration) <span class="cn">休假（灵感）</span></h2>
-                <p class="t-text">
-                    Attended College International Exhibition.
-                    <span class="cn">参加了大学国际展览。</span>
-                </p>
-            </div>
-
-            <div class="lunar-card">
-                <span class="date-badge">Jan 30</span>
-                <h2 class="t-text">Video Polish <span class="cn">视频完善</span></h2>
-                <p class="t-text">
-                    Refined speed curves and added Sound SFX for impact.
-                    <span class="cn">完善了速度曲线并添加了音效以增加冲击力。</span>
-                </p>
-                <div class="image-grid">
                     <div class="media-box"><video src="60.mp4" controls muted playsinline></video><div class="media-label">60.mp4</div></div>
                 </div>
             </div>
-        
-            <div class="section-header">
-                <span class="section-icon">✨</span>
-                <h2 class="t-text">Phase 3: Refinement <span class="cn">第三阶段：精细化</span></h2>
-            </div>
 
-            <div class="lunar-card">
-                <span class="date-badge">Feb 2</span>
-                <h2 class="t-text">Cross-Brand Editing <span class="cn">跨品牌编辑</span></h2>
-                <p class="t-text">
-                    Edited promo video for Philips and drafted story for Xiaomi. Enhanced Coocaa Mini LED video.
-                    <span class="cn">编辑了飞利浦宣传视频并起草了小米的故事。增强了 Coocaa Mini LED 视频。</span>
-                </p>
-                <p style="font-size: 0.9rem; color: var(--cny-gold); margin-top: 5px;">
-                    <strong>Output:</strong> 17 Frame Edits, 9 Video Generations, 10 Post-Compositing.
-                </p>
+            <div class="neon-card">
+                <span class="date-badge">Feb 2-6</span>
+                <h2 class="t-text">Cross-Brand Refining <span class="cn">跨品牌优化</span></h2>
+                <p class="t-text">Edited promos for Philips PFT6290/94, drafted Xiaomi story, composited Amazon cards.<span class="cn">编辑了飞利浦 PFT6290/94 的宣传片，起草了小米的故事，合成了亚马逊卡片。</span></p>
                 <div class="image-grid">
-                    <div class="media-box"><img src="61.png"><div class="media-label">61.png (Edit)</div></div>
+                    <div class="media-box"><img src="61.png"><div class="media-label">61.png</div></div>
                     <div class="media-box"><img src="62.png"><div class="media-label">62.png</div></div>
                     <div class="media-box"><video src="63.mp4" controls muted playsinline></video><div class="media-label">63.mp4</div></div>
-                </div>
-            </div>
-
-            <div class="lunar-card">
-                <span class="date-badge">Feb 3</span>
-                <h2 class="t-text">Compositing & Framing <span class="cn">合成与构图</span></h2>
-                <p class="t-text">
-                    Refined Amazon Store Cards and worked on Mini LED video framing. Focused on post-<span class="vocab">compositing</span>.
-                    <span class="cn">完善了亚马逊商店卡片并致力于 Mini LED 视频构图。专注于后期合成。</span>
-                </p>
-                <p style="font-size: 0.9rem; color: var(--cny-gold); margin-top: 5px;">
-                    <strong>Output:</strong> 28 Image Frames, 5 Video Frames.
-                </p>
-                <div class="image-grid">
                     <div class="media-box"><img src="63.png"><div class="media-label">63.png</div></div>
                     <div class="media-box"><img src="64.png"><div class="media-label">64.png</div></div>
                     <div class="media-box"><video src="64.mp4" controls muted playsinline></video><div class="media-label">64.mp4</div></div>
                     <div class="media-box"><img src="65.png"><div class="media-label">65.png</div></div>
-                </div>
-            </div>
-
-            <div class="lunar-card">
-                <span class="date-badge">Feb 4</span>
-                <h2 class="t-text">Design Refinements <span class="cn">设计优化</span></h2>
-                <p class="t-text">
-                    Continued polishing the Coocaa Amazon Store cards based on feedback.
-                    <span class="cn">根据反馈继续打磨 Coocaa 亚马逊商店卡片。</span>
-                </p>
-                <div class="image-grid">
                     <div class="media-box"><img src="66.png"><div class="media-label">66.png</div></div>
                     <div class="media-box"><img src="67.png"><div class="media-label">67.png</div></div>
-                </div>
-            </div>
-
-            <div class="lunar-card">
-                <span class="date-badge">Feb 5</span>
-                <h2 class="t-text">Competition Leave <span class="cn">竞赛休假</span></h2>
-                <p class="t-text">
-                    Participated in the International Technovation Project competition. 🎓
-                    <span class="cn">参加了国际技术创新项目竞赛。🎓</span>
-                </p>
-            </div>
-
-            <div class="lunar-card">
-                <span class="date-badge">Feb 6</span>
-                <h2 class="t-text">Catalog & Video <span class="cn">目录与视频</span></h2>
-                <p class="t-text">
-                    Rendered Coocaa Catalog cover and finalized Mini LED video edits.
-                    <span class="cn">渲染了 Coocaa 目录封面并完成了 Mini LED 视频编辑。</span>
-                </p>
-                <p style="font-size: 0.9rem; color: var(--cny-gold); margin-top: 5px;">
-                    <strong>Output:</strong> 16 Design Variations, 24 Edits.
-                </p>
-                <div class="image-grid">
                     <div class="media-box"><img src="69.png"><div class="media-label">69.png</div></div>
                     <div class="media-box"><img src="70.png"><div class="media-label">70.png</div></div>
                     <div class="media-box"><img src="71.png"><div class="media-label">71.png</div></div>
@@ -582,214 +346,262 @@
             </div>
         </div>
 
-
         <div id="week4">
             <div class="section-header">
-                <span class="section-icon">🧧</span>
-                <h2 class="t-text">Phase 4: Festivals & Momentum <span class="cn">第四阶段：节日与动力</span></h2>
+                <span class="section-icon">🚀</span>
+                <h2 class="t-text">Phase 4: Momentum <span class="cn">第四阶段：动力</span></h2>
             </div>
 
-            <div class="lunar-card" style="opacity: 0.7;">
-                <span class="date-badge" style="background: #333;">Feb 7-8 (Weekend)</span>
-                <h2 class="t-text">Weekly Reset <span class="cn">每周重置</span></h2>
-            </div>
-
-            <div class="lunar-card">
-                <span class="date-badge">Feb 9 (Monday)</span>
-                <h2 class="t-text">T20 & Valentines Kickoff <span class="cn">T20与情人节启动</span></h2>
-                <p class="t-text">
-                    Initiated creative production for Philips and Coocaa under major themes: T20 World Cup Men and Valentine's Day. Focus on high-energy sports visuals and romantic aesthetics.
-                    <span class="cn">启动了飞利浦和 Coocaa 的创意制作，主题为 T20 男子世界杯和情人节。专注于高能体育视觉效果和浪漫美学。</span>
-                </p>
-                <p style="font-size: 0.9rem; color: var(--cny-gold); margin-top: 5px;">
-                    <strong>Output:</strong> 28 Renderings, 9 Designs.
-                </p>
+            <div class="neon-card">
+                <span class="date-badge">Feb 9-13</span>
+                <h2 class="t-text">Festivals & T20 <span class="cn">节日与T20</span></h2>
+                <p class="t-text">High volume output covering T20 World Cup, Valentine's, Mahashivratri, and Ramadan concept breakdowns.<span class="cn">高产量输出，涵盖T20世界杯、情人节、湿婆节和斋月概念分解。</span></p>
                 <div class="image-grid">
                     <div class="media-box"><img src="75.png"><div class="media-label">75.png</div></div>
                     <div class="media-box"><img src="76.png"><div class="media-label">76.png</div></div>
-                </div>
-            </div>
-
-            <div class="lunar-card">
-                <span class="date-badge">Feb 10 (Tuesday)</span>
-                <h2 class="t-text">Catalogue & Motion Love <span class="cn">目录与动态之爱</span></h2>
-                <p class="t-text">
-                    Executed PSD formatting for the Coocaa catalogue page refinement. Simultaneously worked on Coocaa Valentine's motion creatives.
-                    <span class="cn">执行了 Coocaa 目录页面细化的 PSD 格式化。同时致力于 Coocaa 情人节动态创意。</span>
-                </p>
-                <p style="font-size: 0.9rem; color: var(--cny-gold); margin-top: 5px;">
-                    <strong>Output:</strong> 8 Renderings, 2 Designs.
-                </p>
-                <div class="image-grid">
                     <div class="media-box"><video src="77.mp4" controls muted playsinline></video><div class="media-label">77.mp4</div></div>
-                </div>
-            </div>
-
-            <div class="lunar-card">
-                <span class="date-badge">Feb 11 (Wednesday)</span>
-                <h2 class="t-text">Coocaa Mahashivratri <span class="cn">Coocaa 湿婆节</span></h2>
-                <p class="t-text">
-                    Developed festival creatives for Coocaa for Mahashivratri.
-                    <span class="cn">为 Coocaa 开发了湿婆节的节日创意。</span>
-                </p>
-                <p style="font-size: 0.9rem; color: var(--cny-gold); margin-top: 5px;">
-                    <strong>Output:</strong> 7 Renderings, 2 Designs.
-                </p>
-                <div class="image-grid">
                     <div class="media-box"><video src="78.mp4" controls muted playsinline></video><div class="media-label">78.mp4</div></div>
-                </div>
-            </div>
-
-            <div class="lunar-card">
-                <span class="date-badge">Feb 12 (Thursday)</span>
-                <h2 class="t-text">Philips Dual-Festival <span class="cn">飞利浦双节</span></h2>
-                <p class="t-text">
-                    High volume output day covering both Mahashivratri and Valentine's creatives for Philips.
-                    <span class="cn">飞利浦湿婆节和情人节创意的高产量输出日。</span>
-                </p>
-                <p style="font-size: 0.9rem; color: var(--cny-gold); margin-top: 5px;">
-                    <strong>Output:</strong> 32 Renderings, 4 Designs, 2 Posters, 2 Videos (18 Frames).
-                </p>
-                <div class="image-grid">
                     <div class="media-box"><video src="78.2.mp4" controls muted playsinline></video><div class="media-label">78.2.mp4</div></div>
                     <div class="media-box"><video src="79.mp4" controls muted playsinline></video><div class="media-label">79.mp4</div></div>
-                </div>
-            </div>
-
-            <div class="lunar-card">
-                <span class="date-badge">Feb 13 (Friday)</span>
-                <h2 class="t-text">Ramadan Concepts <span class="cn">斋月概念</span></h2>
-                <p class="t-text">
-                    Finalized Coocaa Valentine's video (8 frames) and began concept breakdown for upcoming Ramadan creatives for Philips.
-                    <span class="cn">完成了 Coocaa 情人节视频（8帧），并开始为飞利浦即将到来的斋月创意进行概念分解。</span>
-                </p>
-                <div class="image-grid">
                     <div class="media-box"><video src="80.mp4" controls muted playsinline></video><div class="media-label">80.mp4</div></div>
                 </div>
             </div>
 
-            <div class="lunar-card" style="opacity: 0.7;">
-                <span class="date-badge" style="background: #333;">Feb 14-16</span>
-                <h2 class="t-text">Weekend & Leave <span class="cn">周末与休假</span></h2>
-                <p class="t-text">Feb 14-15 Weekend Off. Feb 16 Leave (Out of Town).</p>
-            </div>
-
-            <div class="lunar-card" style="border-color: var(--cny-red-bright);">
-                <span class="date-badge">Feb 17 (Tuesday)</span>
-                <h2 class="t-text">CNY & Multi-Project <span class="cn">春节与多项目</span></h2>
-                <p class="t-text">
-                    A diverse day: Ramadan creatives, MiniLED video refinement, and shooting/editing for the Chinese New Year celebration.
-                    <span class="cn">多样化的一天：斋月创意、MiniLED 视频细化，以及春节庆祝活动的拍摄/编辑。</span>
-                </p>
-                <p style="font-size: 0.9rem; color: var(--cny-gold); margin-top: 5px;">
-                    <strong>Output:</strong> 20 Renderings, 3 Video Designs, 12 Frames.
-                </p>
+            <div class="neon-card">
+                <span class="date-badge">Feb 17-20</span>
+                <h2 class="t-text">CNY & Science Day <span class="cn">春节与科学日</span></h2>
+                <p class="t-text">Chinese New Year shooting, Ramadan creatives, and massive National Science Day rendering for Philips.<span class="cn">春节拍摄、斋月创意以及飞利浦国家科学日的大量渲染。</span></p>
                 <div class="image-grid">
                     <div class="media-box"><img src="81.png"><div class="media-label">81.png</div></div>
                     <div class="media-box"><video src="82.mp4" controls muted playsinline></video><div class="media-label">82.mp4</div></div>
                     <div class="media-box"><img src="cny1.jpeg"><div class="media-label">cny1.jpeg</div></div>
                     <div class="media-box"><video src="cny2.mp4" controls muted playsinline></video><div class="media-label">cny2.mp4</div></div>
-                </div>
-            </div>
-
-            <div class="lunar-card" style="opacity: 0.7;">
-                <span class="date-badge" style="background: #333;">Feb 18 (Wednesday)</span>
-                <h2 class="t-text">Sick Leave <span class="cn">病假</span></h2>
-            </div>
-
-            <div class="lunar-card">
-                <span class="date-badge">Feb 19 (Thursday)</span>
-                <h2 class="t-text">Science Day Storyboard <span class="cn">科学日故事板</span></h2>
-                <p class="t-text">
-                    Storyboarding and asset collection for Philips National Science Day creative. High rendering volume for assets.
-                    <span class="cn">飞利浦国家科学日创意的故事板和资产收集。资产的高渲染量。</span>
-                </p>
-                <p style="font-size: 0.9rem; color: var(--cny-gold); margin-top: 5px;">
-                    <strong>Output:</strong> 38 Renderings, 26 Frames, 1 Design Video.
-                </p>
-                <div class="image-grid">
                     <div class="media-box"><video src="83.mp4" controls muted playsinline></video><div class="media-label">83.mp4</div></div>
-                </div>
-            </div>
-
-            <div class="lunar-card">
-                <span class="date-badge">Feb 20 (Friday)</span>
-                <h2 class="t-text">Philips Refinement <span class="cn">飞利浦细化</span></h2>
-                <p class="t-text">
-                    Refinement of Philips creatives and work on Coocaa National Science Day assets.
-                    <span class="cn">飞利浦创意的细化以及 Coocaa 国家科学日资产的工作。</span>
-                </p>
-                <p style="font-size: 0.9rem; color: var(--cny-gold); margin-top: 5px;">
-                    <strong>Output:</strong> 12 Renderings, 8 Frames, 3 Designs.
-                </p>
-                <div class="image-grid">
                     <div class="media-box"><video src="83.1.mp4" controls muted playsinline></video><div class="media-label">83.1.mp4</div></div>
                     <div class="media-box"><img src="84.png"><div class="media-label">84.png</div></div>
                 </div>
             </div>
 
-            <div class="lunar-card" style="opacity: 0.7;">
-                <span class="date-badge" style="background: #333;">Feb 21-22 (Weekend)</span>
-                <h2 class="t-text">Weekly Reset <span class="cn">每周重置</span></h2>
+            <div class="neon-card">
+                <span class="date-badge">Feb 23-25</span>
+                <h2 class="t-text">Skyworth HQ Final <span class="cn">创维总部定稿</span></h2>
+                <p class="t-text">Holi storyboarding and finalizing the critical Skyworth HQ 2025 Review Video.<span class="cn">洒红节故事板和完成关键的创维总部 2025 审查视频。</span></p>
+                <div class="image-grid">
+                    <div class="media-box full-width-media"><img src="84.1.png"><div class="media-label">84.1.png</div></div>
+                    <div class="media-box"><video src="84.mp4" controls muted playsinline></video><div class="media-label">84.mp4</div></div>
+                </div>
             </div>
+        </div>
 
+        <div id="week7">
             <div class="section-header">
-                <span class="section-icon">🐴</span>
-                <h2 class="t-text">Phase 5: The Sprint <span class="cn">第五阶段：冲刺</span></h2>
+                <span class="section-icon">🎨</span>
+                <h2 class="t-text">Phase 6: Colors & Speed <span class="cn">第六阶段：色彩与速度</span></h2>
             </div>
 
-            <div class="lunar-card" style="border-color: var(--cny-gold);">
-                <span class="date-badge">Feb 23 (Monday)</span>
-                <h2 class="t-text">Holi & Skyworth HQ <span class="cn">洒红节与创维总部</span></h2>
+            <div class="neon-card">
+                <span class="date-badge">Feb 26</span>
+                <h2 class="t-text">Holi Framework <span class="cn">洒红节框架</span></h2>
                 <p class="t-text">
-                    Storyboarding and rendering for upcoming Holi festival creatives. Simultaneously conducted asset collection for the critical Skyworth HQ 2025 Review Video assignment.
-                    <span class="cn">即将到来的洒红节创意的故事板和渲染。同时为关键的创维总部 2025 审查视频作业进行了资产收集。</span>
+                    Kicked off the vibrant Holi creatives for both Coocaa and Philips. Spent the day generating core visual assets and framing the baseline aesthetic. 🎨
+                    <span class="cn">启动了 Coocaa 和飞利浦充满活力的洒红节创意。花了一天时间生成核心视觉资产并构建基线美学。🎨</span>
+                </p>
+                <p style="font-size: 1rem; color: var(--neon-cyan); margin-top: 10px; font-weight:700;">
+                    OUTPUT: 16 Generations, 8 Initial Designs.
                 </p>
                 <div class="image-grid">
-                    <div class="media-box full-width-media">
-                        <img src="84.1.png">
-                        <div class="media-label" style="position:absolute; bottom:10px; right:10px; background:rgba(0,0,0,0.7); padding:2px 5px;">84.1.png (HQ Assets)</div>
+                    <div class="media-box"><img src="89.png"><div class="media-label">89.png</div></div>
+                    <div class="media-box"><img src="90.png"><div class="media-label">90.png</div></div>
+                    <div class="media-box"><img src="91.png"><div class="media-label">91.png</div></div>
+                </div>
+            </div>
+
+            <div class="neon-card">
+                <span class="date-badge">Feb 27</span>
+                <h2 class="t-text">Coocaa Holi Video <span class="cn">Coocaa 洒红节视频</span></h2>
+                <p class="t-text">
+                    Deep dive into frame collection to ensure the Philips and Coocaa Holi visuals hit the right festive note. Successfully finalized the high-energy Coocaa Holi Video. 🔥
+                    <span class="cn">深入进行帧收集，以确保飞利浦和 Coocaa 的洒红节视觉效果达到正确的节日基调。成功完成了高能的 Coocaa 洒红节视频。🔥</span>
+                </p>
+                <p style="font-size: 1rem; color: var(--neon-cyan); margin-top: 10px; font-weight:700;">
+                    OUTPUT: 36 Generations, 2 Concepts, 1 Finalized Video.
+                </p>
+                <div class="image-grid">
+                    <div class="media-box"><video src="92.mp4" controls muted playsinline></video><div class="media-label">92.mp4</div></div>
+                    <div class="media-box"><img src="93.png"><div class="media-label">93.png</div></div>
+                    <div class="media-box"><img src="94.png"><div class="media-label">94.png</div></div>
+                    <div class="media-box"><img src="95.png"><div class="media-label">95.png</div></div>
+                    <div class="media-box"><img src="96.png"><div class="media-label">96.png</div></div>
+                </div>
+            </div>
+
+            <div class="neon-card" style="border-color: var(--neon-yellow);">
+                <span class="date-badge" style="background:var(--neon-yellow);">Feb 28</span>
+                <h2 class="t-text">The "Unpaid Leave" Hustle <span class="cn">“无薪休假”的冲刺</span></h2>
+                <p class="t-text">
+                    Technically on "unpaid leave," but creativity doesn't clock out! Designed the critical catalogue images for the Philips PFT6290 model, exploring massive variations. 💼✨
+                    <span class="cn">名义上是“无薪休假”，但创意不打卡！设计了飞利浦 PFT6290 型号的关键目录图像，探索了大量变体。💼✨</span>
+                </p>
+                <p style="font-size: 1rem; color: var(--neon-cyan); margin-top: 10px; font-weight:700;">
+                    OUTPUT: 40 Generations, 18 Designs/Variations.
+                </p>
+                <div class="image-grid">
+                    <div class="media-box"><img src="97.png"><div class="media-label">97.png</div></div>
+                </div>
+            </div>
+
+            <div class="neon-card" style="background: rgba(0, 0, 0, 0.4);">
+                <span class="date-badge" style="background: #555; color: white;">March 1 & 4</span>
+                <h2 class="t-text">Holidays <span class="cn">假期</span></h2>
+                <p class="t-text">Recharging batteries for the next sprint. 🔋<span class="cn">为下一次冲刺充电。🔋</span></p>
+            </div>
+
+            <div class="neon-card">
+                <span class="date-badge">March 2</span>
+                <h2 class="t-text">PFT6290 & Skyworth Holi <span class="cn">PFT6290 与创维洒红节</span></h2>
+                <p class="t-text">
+                    Locked in the final designs for the Philips PFT6290. Shifted gears to produce the explosive Holi creative video for Skyworth.
+                    <span class="cn">锁定了飞利浦 PFT6290 的最终设计。转换档位，为创维制作爆炸性的洒红节创意视频。</span>
+                </p>
+                <div class="image-grid">
+                    <div class="media-box"><img src="98.png"><div class="media-label">98.png</div></div>
+                    <div class="media-box"><img src="99.png"><div class="media-label">99.png</div></div>
+                    <div class="media-box"><img src="100.png"><div class="media-label">100.png</div></div>
+                    <div class="media-box"><video src="103.mp4" controls muted playsinline></video><div class="media-label">103.mp4</div></div>
+                </div>
+            </div>
+
+            <div class="neon-card">
+                <span class="date-badge">March 3</span>
+                <h2 class="t-text">Philips Holi Video <span class="cn">飞利浦洒红节视频</span></h2>
+                <p class="t-text">
+                    Continued the Holi momentum by wrapping up the video creatives and final visual assets specifically for Philips.
+                    <span class="cn">继续洒红节的势头，专门为飞利浦完成了视频创意和最终视觉资产。</span>
+                </p>
+                <div class="image-grid">
+                    <div class="media-box"><img src="101.png"><div class="media-label">101.png</div></div>
+                    <div class="media-box"><img src="102.png"><div class="media-label">102.png</div></div>
+                    <div class="media-box"><img src="103.png"><div class="media-label">103.png</div></div>
+                    <div class="media-box"><img src="104.png"><div class="media-label">104.png</div></div>
+                </div>
+            </div>
+
+            <div class="neon-card" style="border-color: var(--neon-purple);">
+                <span class="date-badge" style="background:var(--neon-purple); color:white;">March 5</span>
+                <h2 class="t-text">IPL Screenfills & Women's Day <span class="cn">IPL 屏幕填充与妇女节</span></h2>
+                <p class="t-text">
+                    Massive dual-theme day. Designed high-quality "Screenfill" assets for the highly anticipated IPL cricket theme. Simultaneously crafted empowering Women's Day campaigns for both Coocaa and Philips. 🏏👩‍💼
+                    <span class="cn">庞大的双主题日。为备受期待的 IPL 板球主题设计了高质量的“屏幕填充”资产。同时为 Coocaa 和飞利浦精心制作了鼓舞人心的妇女节营销活动。🏏👩‍💼</span>
+                </p>
+                <p style="font-size: 1rem; color: var(--neon-cyan); margin-top: 10px; font-weight:700;">
+                    OUTPUT: 38 Generations, 16 HQ Screenfills, 4 Women's Day Designs.
+                </p>
+                <div class="image-grid">
+                    <div class="media-box"><img src="105.png"><div class="media-label">105.png</div></div>
+                    <div class="media-box"><img src="106.png"><div class="media-label">106.png</div></div>
+                    <div class="media-box"><img src="107.png"><div class="media-label">107.png</div></div>
+                    <div class="media-box"><img src="108.png"><div class="media-label">108.png</div></div>
+                    <div class="media-box"><img src="109.png"><div class="media-label">109.png</div></div>
+                    <div class="media-box"><img src="110.png"><div class="media-label">110.png</div></div>
+                    <div class="media-box"><img src="111.png"><div class="media-label">111.png</div></div>
+                    <div class="media-box"><img src="112.png"><div class="media-label">112.png</div></div>
+                    <div class="media-box"><img src="113.png"><div class="media-label">113.png</div></div>
+                    <div class="media-box"><img src="114.png"><div class="media-label">114.png</div></div>
+                </div>
+            </div>
+
+            <div class="neon-card">
+                <span class="date-badge">March 6</span>
+                <h2 class="t-text">Amazon Standard Cards <span class="cn">亚马逊标准卡片</span></h2>
+                <p class="t-text">
+                    E-Commerce focus: Edited Amazon sale cards for Coocaa. Finalized 6 high-quality standard cards packaged cleanly in open PSD files and JPEGs. 🛒
+                    <span class="cn">电子商务重点：编辑了 Coocaa 的亚马逊促销卡。完成了 6 个高质量的标准卡片，干净地打包在开放的 PSD 文件和 JPEG 中。🛒</span>
+                </p>
+                <p style="font-size: 1rem; color: var(--neon-cyan); margin-top: 10px; font-weight:700;">
+                    OUTPUT: 16 Generations, 12 Designs, 3 Variations each.
+                </p>
+                <div class="image-grid">
+                    <div class="media-box"><img src="115.png"><div class="media-label">115.png</div></div>
+                    <div class="media-box"><img src="116.png"><div class="media-label">116.png</div></div>
+                    <div class="media-box"><img src="117.png"><div class="media-label">117.png</div></div>
+                    <div class="media-box"><img src="118.png"><div class="media-label">118.png</div></div>
+                </div>
+            </div>
+
+            <div class="neon-card">
+                <span class="date-badge">March 7</span>
+                <h2 class="t-text">Saturday Hustle <span class="cn">周六的忙碌</span></h2>
+                <p class="t-text">
+                    Saturday Holiday? Not for creativity. Jumped in to produce a dynamic Philips WhatsApp sales GIF and finalized the impactful Women's Day video for Skyworth. 📱
+                    <span class="cn">周六放假？创意可不放假。投入制作动态飞利浦 WhatsApp 销售 GIF，并完成了极具影响力的创维妇女节视频。📱</span>
+                </p>
+                <div class="image-grid">
+                    <div class="media-box"><video src="119.mp4" controls muted playsinline></video><div class="media-label">119.mp4</div></div>
+                    <div class="media-box"><video src="120.mp4" controls muted playsinline></video><div class="media-label">120.mp4</div></div>
+                </div>
+            </div>
+
+            <div class="neon-card">
+                <span class="date-badge">March 9</span>
+                <h2 class="t-text">T20 Victory & F1 Preparation <span class="cn">T20 胜利与 F1 准备</span></h2>
+                <p class="t-text">
+                    Celebrated Team India's epic T20 Men's World Cup Victory with rapid-response creatives for both Coocaa and Philips! Then, shifted entirely into high gear for the Coocaa F1 frame collection. 🏏🏆🏎️
+                    <span class="cn">用 Coocaa 和飞利浦的快速响应创意庆祝了印度队史诗般的 T20 男子世界杯胜利！然后，全速投入 Coocaa F1 帧的收集。🏏🏆🏎️</span>
+                </p>
+                <p style="font-size: 1rem; color: var(--neon-cyan); margin-top: 10px; font-weight:700;">
+                    OUTPUT: 19 Generations, 12 Designs, 2 Finalized.
+                </p>
+                <div class="image-grid">
+                    <div class="media-box"><img src="121.png"><div class="media-label">121.png</div></div>
+                    <div class="media-box"><img src="122.png"><div class="media-label">122.png</div></div>
+                    <div class="media-box"><img src="123.png"><div class="media-label">123.png</div></div>
+                    <div class="media-box"><img src="124.png"><div class="media-label">124.png</div></div>
+                    <div class="media-box"><img src="125.png"><div class="media-label">125.png</div></div>
+                    <div class="media-box"><img src="125.jpeg"><div class="media-label">125.jpeg</div></div> <div class="media-box"><video src="126.mp4" controls muted playsinline></video><div class="media-label">126.mp4</div></div>
+                    <div class="media-box"><img src="127.png"><div class="media-label">127.png</div></div>
+                    <div class="media-box"><img src="128.jpg"><div class="media-label">128.jpg</div></div>
+                </div>
+            </div>
+
+            <div class="neon-card" style="border-color: var(--neon-pink);">
+                <span class="date-badge" style="background:var(--neon-pink); color:white;">March 10</span>
+                <h2 class="t-text">F1 Checkered Flag <span class="cn">F1 方格旗</span></h2>
+                <p class="t-text">
+                    Crossed the finish line on the high-speed F1 video and designed custom reel covers to ensure maximum social impact. 🏁
+                    <span class="cn">越过高速 F1 视频的终点线，并设计了定制的 Reel 封面以确保最大的社会影响力。🏁</span>
+                </p>
+                <div class="image-grid">
+                    <div class="media-box"><img src="129.png"><div class="media-label">129.png</div></div>
+                    <div class="media-box"><video src="130.mp4" controls muted playsinline></video><div class="media-label">130.mp4</div></div>
+                </div>
+
+                <div style="margin-top: 40px; text-align: center; border-top: 2px dashed rgba(255,255,255,0.2); padding-top: 30px;">
+                    <h3 class="t-text" style="color:var(--neon-pink); margin-bottom:15px; font-size: 1.8rem;">Behind The Scenes <span class="cn">幕后花絮</span></h3>
+                    <p class="t-text" style="font-style: italic; font-size: 1.2rem; color: #fff;">
+                        Yes, this is me currently working on the exact same report you are reading right now. Very Meta, right? 💻✨
+                        <span class="cn">是的，这是我正在制作您现在正在阅读的这份报告。非常元宇宙，对吧？💻✨</span>
+                    </p>
+                    <div class="media-box" style="max-width: 500px; margin: 20px auto;">
+                        <img src="130.jpeg" style="border-radius: 10px;">
+                        <div class="media-label">130.jpeg (Creating this report)</div>
                     </div>
                 </div>
             </div>
 
-            <div class="lunar-card">
-                <span class="date-badge">Feb 24 (Tuesday)</span>
-                <h2 class="t-text">HQ Video Finalization <span class="cn">总部视频定稿</span></h2>
-                <p class="t-text">
-                    Finalized the editing for the Skyworth 2025 Review Video. Continued Holi creative rendering.
-                    <span class="cn">完成了创维 2025 审查视频的编辑。继续洒红节创意渲染。</span>
-                </p>
-                <p style="font-size: 0.9rem; color: var(--cny-gold); margin-top: 5px;">
-                    <strong>Output:</strong> 27 Renderings, 2 Designs.
-                </p>
-                <div class="image-grid">
-                    <div class="media-box"><video src="84.mp4" controls muted playsinline></video><div class="media-label">84.mp4</div></div>
-                </div>
-            </div>
-
-            <div class="lunar-card" style="background: rgba(40, 10, 10, 0.6);">
-                <span class="date-badge">Feb 25 (Wednesday - WFH)</span>
-                <h2 class="t-text">Creative Reboot <span class="cn">创意重启</span></h2>
-                <p class="t-text">
-                    Work From Home: Holi editing and essential sleep completion for a creative reboot. haha.
-                    <span class="cn">在家工作：洒红节编辑和必要的睡眠补充，以实现创意重启。哈哈。</span>
-                </p>
-            </div>
         </div>
 
         <div id="game-container">
             <div id="start-screen">
-                <h2>🐎 The Lucky Horse Run 🧧</h2>
-                <p>Collect Red Envelopes for Good Luck!</p>
-                <button id="start-btn" onclick="startGame()">START GAME</button>
+                <h2>🏎️ HOLI F1 GRAND PRIX 🎨</h2>
+                <p style="color:var(--neon-cyan); margin-bottom:20px; font-size:1.4rem;">Drive the F1 car. Catch Colors (🎨) and Trophies (🏆). Dodge Boring TVs (📺).</p>
+                <button id="start-btn" onclick="startGame()">START ENGINE</button>
             </div>
             <div id="game-ui" style="display:none;">Score: <span id="score">0</span></div>
             <canvas id="game-canvas"></canvas>
         </div>
 
-        <footer style="text-align: center; margin-top: 50px; font-family: 'Cinzel', serif; color: var(--cny-gold-dark);">
-            Lunar Engine V4.0 | Developed by Raghav Sharma
+        <footer style="text-align: center; margin-top: 50px; font-family: 'Outfit', sans-serif; color: #555;">
+            Neon Engine V5.5 ARCADE | Built with ⚡ by Raghav Sharma
         </footer>
 
     </div>
@@ -799,6 +611,8 @@
 
         function scrollToSection(id) {
             document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
         }
 
         function toggleLanguage() {
@@ -806,30 +620,98 @@
             document.body.classList.toggle('chinese-mode');
         }
 
-        // --- GENERATE LANTERNS ---
-        const lanternContainer = document.getElementById('lantern-container');
-        for (let i = 0; i < 15; i++) {
-            const lantern = document.createElement('div');
-            lantern.classList.add('lantern');
-            lantern.style.left = Math.random() * 100 + 'vw';
-            lantern.style.animationDuration = (Math.random() * 10 + 15) + 's';
-            lantern.style.animationDelay = (Math.random() * -20) + 's';
-            lanternContainer.appendChild(lantern);
+        // --- WEB AUDIO API SYNTHESIZER (NO EXTERNAL AUDIO FILES NEEDED) ---
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        const audioCtx = new AudioContext();
+
+        function playSound(type) {
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            
+            const osc = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            
+            osc.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+            
+            const now = audioCtx.currentTime;
+
+            if (type === 'splash') {
+                // Quick high pitched pop for background clicks
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(800, now);
+                osc.frequency.exponentialRampToValueAtTime(300, now + 0.1);
+                gainNode.gain.setValueAtTime(0.1, now);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
+                osc.start(now);
+                osc.stop(now + 0.1);
+            } 
+            else if (type === 'ping') {
+                // Arcade coin catch sound
+                osc.type = 'square';
+                osc.frequency.setValueAtTime(400, now);
+                osc.frequency.setValueAtTime(600, now + 0.1);
+                gainNode.gain.setValueAtTime(0.1, now);
+                gainNode.gain.linearRampToValueAtTime(0, now + 0.2);
+                osc.start(now);
+                osc.stop(now + 0.2);
+            }
+            else if (type === 'crash') {
+                // Low thud for hitting TV
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(100, now);
+                osc.frequency.exponentialRampToValueAtTime(10, now + 0.3);
+                gainNode.gain.setValueAtTime(0.2, now);
+                gainNode.gain.linearRampToValueAtTime(0, now + 0.3);
+                osc.start(now);
+                osc.stop(now + 0.3);
+            }
+            else if (type === 'rev') {
+                // Engine Rev for Start Game
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(50, now);
+                osc.frequency.linearRampToValueAtTime(200, now + 0.5);
+                gainNode.gain.setValueAtTime(0, now);
+                gainNode.gain.linearRampToValueAtTime(0.2, now + 0.2);
+                gainNode.gain.linearRampToValueAtTime(0, now + 0.6);
+                osc.start(now);
+                osc.stop(now + 0.6);
+            }
         }
 
-        // --- THE LUCKY HORSE GAME ENGINE ---
+        // --- GLOBAL CLICK COLOR SPLASH (WITH SOUND) ---
+        document.addEventListener('click', function(e) {
+            if(e.target.tagName === 'BUTTON') return; 
+            
+            // Play Synth Splash Sound!
+            playSound('splash');
+
+            const splash = document.createElement('div');
+            splash.className = 'splash-anim';
+            splash.style.left = e.pageX + 'px';
+            splash.style.top = e.pageY + 'px';
+            const colors = ['#ff007f', '#00f0ff', '#ffea00', '#8a2be2', '#39ff14'];
+            const randColor = colors[Math.floor(Math.random() * colors.length)];
+            splash.style.color = randColor;
+            splash.style.background = randColor;
+            document.body.appendChild(splash);
+            setTimeout(() => splash.remove(), 500);
+        });
+
+        // --- THE F1 HOLI GAME ENGINE (WITH SOUNDS) ---
         const canvas = document.getElementById('game-canvas');
         const ctx = canvas.getContext('2d');
         let gameRunning = false;
         let score = 0;
-        let horse = { x: 0, y: 0, width: 60, height: 40 };
-        let envelopes = [];
+        let car = { x: 0, y: 0, width: 60, height: 60 };
+        let items = [];
         let mouseX = 0;
+        let gameSpeed = 3;
 
         function resizeCanvas() {
             canvas.width = document.getElementById('game-container').offsetWidth;
             canvas.height = document.getElementById('game-container').offsetHeight;
-            horse.y = canvas.height - 60;
+            car.y = canvas.height - 80;
+            car.x = canvas.width / 2;
         }
         window.addEventListener('resize', resizeCanvas);
 
@@ -838,7 +720,6 @@
             mouseX = e.clientX - rect.left;
         });
         
-        // Touch support for mobile managers
         canvas.addEventListener('touchmove', (e) => {
             e.preventDefault();
             const rect = canvas.getBoundingClientRect();
@@ -846,61 +727,94 @@
         }, { passive: false });
 
         function startGame() {
+            playSound('rev'); // Play engine rev sound!
             document.getElementById('start-screen').style.display = 'none';
             document.getElementById('game-ui').style.display = 'block';
             resizeCanvas();
             gameRunning = true;
             score = 0;
-            envelopes = [];
+            gameSpeed = 4;
+            items = [];
             gameLoop();
-            spawnEnvelope();
+            spawnItem();
         }
 
-        function spawnEnvelope() {
+        function spawnItem() {
             if (!gameRunning) return;
-            envelopes.push({
-                x: Math.random() * (canvas.width - 30),
-                y: -40,
-                width: 30, height: 40,
-                speed: Math.random() * 2 + 1
+            const types = [
+                { emoji: '🎨', type: 'good', points: 10 },
+                { emoji: '🏆', type: 'good', points: 50 },
+                { emoji: '📺', type: 'bad', points: -30 }
+            ];
+            const rand = Math.random();
+            let selectedType = types[0];
+            if (rand > 0.7 && rand < 0.9) selectedType = types[2];
+            else if (rand >= 0.9) selectedType = types[1];
+
+            items.push({
+                x: Math.random() * (canvas.width - 50),
+                y: -50,
+                width: 50, height: 50,
+                emoji: selectedType.emoji,
+                type: selectedType.type,
+                points: selectedType.points,
+                speed: Math.random() * 2 + gameSpeed
             });
-            setTimeout(spawnEnvelope, Math.random() * 1000 + 500);
+
+            let spawnRate = Math.max(300, 1000 - (score * 2));
+            setTimeout(spawnItem, spawnRate);
         }
 
-        function drawHorse(x, y) {
-            ctx.font = "50px Arial";
-            ctx.fillText("🐎", x - 25, y + 40);
+        function drawCar(x, y) {
+            ctx.font = "60px Arial";
+            ctx.fillText("🏎️", x - 30, y + 45);
         }
 
-        function drawEnvelope(e) {
-            ctx.font = "30px Arial";
-            ctx.fillText("🧧", e.x, e.y + 30);
+        function drawItem(item) {
+            ctx.font = "45px Arial";
+            ctx.fillText(item.emoji, item.x, item.y + 40);
         }
 
         function gameLoop() {
             if (!gameRunning) return;
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // Update Horse Pos
-            horse.x = mouseX;
-            drawHorse(horse.x, horse.y);
+            // Smooth car movement
+            car.x += (mouseX - car.x) * 0.15; 
+            
+            if(car.x < 30) car.x = 30;
+            if(car.x > canvas.width - 30) car.x = canvas.width - 30;
 
-            // Update & Draw Envelopes
-            for (let i = envelopes.length - 1; i >= 0; i--) {
-                let e = envelopes[i];
-                e.y += e.speed;
-                drawEnvelope(e);
+            drawCar(car.x, car.y);
 
-                // Collision Detection (Simple Box)
-                if (horse.x < e.x + e.width && horse.x + horse.width > e.x &&
-                    horse.y < e.y + e.height && horse.y + horse.height > e.y) {
-                    score += 10;
+            for (let i = items.length - 1; i >= 0; i--) {
+                let item = items[i];
+                item.y += item.speed;
+                drawItem(item);
+
+                // Collision
+                if (car.x < item.x + item.width && car.x + car.width > item.x &&
+                    car.y < item.y + item.height && car.y + car.height > item.y) {
+                    
+                    score += item.points;
+                    if(score < 0) score = 0;
                     document.getElementById('score').innerText = score;
-                    envelopes.splice(i, 1); // Remove caught envelope
+                    
+                    if(item.type === 'good') {
+                        gameSpeed += 0.05;
+                        playSound('ping'); // Positive Sound!
+                    } else {
+                        playSound('crash'); // Negative Sound!
+                    }
+
+                    // Visual feedback
+                    ctx.fillStyle = item.type === 'good' ? '#00f0ff' : '#ff007f';
+                    ctx.fillRect(0,0, canvas.width, 8);
+
+                    items.splice(i, 1);
                 }
-                // Remove off-screen
-                else if (e.y > canvas.height) {
-                    envelopes.splice(i, 1);
+                else if (item.y > canvas.height) {
+                    items.splice(i, 1);
                 }
             }
 
